@@ -29,11 +29,13 @@ public class Main {
                     if (!items.get("lantern")) {
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
-                                To both the north and south are doors, the northern one wooden, while
-                                the southern one iron. On the table is a lantern. What do you do?
+                                To both the north and south are doors, the northern one wooden
+                                while the southern one iron. On the table is a lantern.
+                                What do you do?
                                 1) Attempt the north door.
                                 2) Attempt the south door.
-                                3) Pick up the lantern.""", validInputs);
+                                3) Pick up the lantern.
+                                """, validInputs);
                         System.out.println(choice);
                     }
                     break;
