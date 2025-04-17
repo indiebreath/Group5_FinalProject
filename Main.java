@@ -4,16 +4,21 @@ import java.util.HashMap;
  * Main.
  */
 public class Main {
-    public static void main(String[] args) {
+    static HashMap<String, Boolean> initItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
         items.put("lantern", false);
         items.put("oil", false);
         items.put("lighter", false);
 
+        return items;
+    }
+
+    public static void main(String[] args) {
         // a1 is top-left, e5 is bottom-right. Letters are horizontal, numbers are
         // vertical.
         String playerLocation = "c3";
         boolean play = true;
+        HashMap<String, Boolean> items = initItems();
 
         // Introduction text.
         System.out.println("""
