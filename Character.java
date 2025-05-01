@@ -17,6 +17,9 @@ public class Character {
     // a1 is top-left, e5 is bottom-right. Letters are horizontal, numbers are
     // vertical.
     String location;
+    // Character's current and maximum possible health.
+    int health;
+    int maxHealth;
 
     /**
      * Character constructor to initialize the class with various parameters such as
@@ -29,6 +32,9 @@ public class Character {
         items.put("lighter", false);
 
         location = "c3";
+
+        health = 10;
+        maxHealth = 10;
     }
 
     /**
@@ -38,5 +44,27 @@ public class Character {
      */
     public void setName(String input) {
         name = input;
+    }
+
+    /**
+     * Method to take damage, lowering the character's health by the amount of
+     * damage taken, also ensure that health does not go below 0.
+     *
+     * @param damage the amount of damage taken, and the amount to reduce health by.
+     */
+    public void takeDamage(int damage) {
+        health -= damage;
+        Utils.clamp(health, 0, maxHealth);
+    }
+
+    /**
+     * Method to heal health by a given amount, does not go over maximum health.
+     *
+     * @param amount the amount to heal, if this plus health is above maxHealth then
+     *               the remainder will be wasted.
+     */
+    public void heal(int amount) {
+        health += amount;
+        Utils.clamp(health, 0, maxHealth);
     }
 }

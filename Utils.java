@@ -43,4 +43,19 @@ public class Utils {
         scanner.close();
         return input;
     }
+
+    /**
+     * Generic clamp method to ensure that the value val remains in between the
+     * values of min and max. Implemented here due to similar method not existing in
+     * standard libraries.
+     *
+     * @param val the value to compare and ensure remains within the min and max
+     *            values.
+     * @param min minimum value that val variable can be.
+     * @param max maximum value that val variable can be.
+     * @return return the resulting value, whether it be unchanged, increased, or lowered.
+     */
+    public static int clamp(int val, int min, int max) {
+        return Math.max(min, Math.min(max, val));
+    }
 }
