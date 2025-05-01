@@ -54,7 +54,7 @@ public class Character {
      */
     public void takeDamage(int damage) {
         health -= damage;
-        Utils.clamp(health, 0, maxHealth);
+        health = Math.clamp(health, 0, maxHealth);
     }
 
     /**
@@ -65,6 +65,6 @@ public class Character {
      */
     public void heal(int amount) {
         health += amount;
-        Utils.clamp(health, 0, maxHealth);
+        health = Math.clamp(health, 0, maxHealth);
     }
 }
