@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Main.
  *
@@ -11,7 +13,13 @@ public class Main {
      * @param args cli arguments
      */
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         Character player = new Character();
+        System.out.println("Enter your name:");
+        player.setName(scanner.nextLine());
+        scanner.close();
+
         boolean play = true;
 
         // Introduction text.
