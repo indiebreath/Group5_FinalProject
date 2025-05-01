@@ -1,3 +1,11 @@
+/**
+ * Tests
+ *
+ * A class to Test various methods within the greater program without needing to
+ * edit the main files.
+ *
+ * @author Mei Waterman (indiebreath)
+ */
 public class Tests {
     public static void main(String[] args) {
         if (args[0].equals("0")) {
@@ -7,6 +15,11 @@ public class Tests {
         }
     }
 
+    /**
+     * Method to test the takeDamage function within the Chracter class, ensuring
+     * that damage is taken correctly and is correctly clamped with 0 being the
+     * lowest value.
+     */
     static void testDamage() {
         Character testCharacter = new Character();
 
@@ -37,6 +50,11 @@ public class Tests {
         }
     }
 
+    /**
+     * Method to test the heal function within the Character class, ensuring that
+     * health is properly restored, and that it is properly clamped to with
+     * maxHealth as the maximum value.
+     */
     static void testHealing() {
         Character testCharacter = new Character();
 
