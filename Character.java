@@ -22,28 +22,16 @@ public class Character {
     int maxHealth;
 
     /**
-     * Character constructor to initialize the class with various parameters such as
-     * location and items.
+     * Character constructor to initialize the class with all parameters filled by
+     * an input.
      */
-    public Character() {
-        items = new HashMap<String, Boolean>();
-        items.put("lantern", false);
-        items.put("oil", false);
-        items.put("lighter", false);
-
-        location = "c3";
-
-        health = 10;
-        maxHealth = 10;
-    }
-
-    /**
-     * Method to set the character's name using a given input.
-     *
-     * @param input what the character's name should be set to.
-     */
-    public void setName(String input) {
-        name = input;
+    public Character(String nameInput, HashMap<String, Boolean> itemsInput, String locationInput,
+            int healthInput, int maxHealthInput) {
+        name = nameInput;
+        items = itemsInput;
+        location = locationInput;
+        health = healthInput;
+        maxHealth = maxHealthInput;
     }
 
     /**
