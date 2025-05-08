@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * Tests
  *
@@ -21,7 +23,8 @@ public class Tests {
      * lowest value.
      */
     static void testDamage() {
-        Character testCharacter = new Character();
+        Character testCharacter = new Character("Test", new HashMap<String, Boolean>(), "c3",
+                10, 10);
 
         System.out.println("--- Testing Character Damage ---");
         System.out.println("TestCharacter's health: " + testCharacter.health);
@@ -56,7 +59,8 @@ public class Tests {
      * maxHealth as the maximum value.
      */
     static void testHealing() {
-        Character testCharacter = new Character();
+        Character testCharacter = new Character("Test", new HashMap<String, Boolean>(), "c3",
+                10, 10);
 
         System.out.println("--- Testing Character Healing ---");
         System.out.println("TestCharacter's health: " + testCharacter.health);
