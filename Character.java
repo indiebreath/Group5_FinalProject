@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Character.
@@ -20,18 +21,23 @@ public class Character {
     // Character's current and maximum possible health.
     int health;
     int maxHealth;
+    // Character's default damage value;
+    int minDamage;
+    int maxDamage;
 
     /**
      * Character constructor to initialize the class with all parameters filled by
      * an input.
      */
     public Character(String nameInput, HashMap<String, Boolean> itemsInput, String locationInput,
-            int healthInput, int maxHealthInput) {
+            int healthInput, int maxHealthInput, int minDamageInput, int maxDamageInput) {
         name = nameInput;
         items = itemsInput;
         location = locationInput;
         health = healthInput;
         maxHealth = maxHealthInput;
+        minDamage = minDamageInput;
+        maxDamage = maxDamageInput;
     }
 
     /**
@@ -54,5 +60,25 @@ public class Character {
     public void heal(int amount) {
         health += amount;
         health = Math.clamp(health, 0, maxHealth);
+    }
+
+    /**
+     * Method to make an attack roll. Very basic as it only checks for the existence
+     * of the sword (working name) in the character's inventory, then deals a range
+     * of damage based on whether or not that item is in the character's inventory.
+     * Can be reworked with layered if statements to automatically pick highest
+     * damage dealing item if multiple weapons are implemented though.
+     *
+     * @return the amount of damage dealt to the opponent.
+     */
+    public int attack() {
+        Random rand = new Random();
+
+        // long equals statement is to have it return false if the checked value is null
+        if (Boolean.TRUE.equals(items.get("sword"))) {
+            return rand.nextInt(4, 7);
+        } else {
+            return rand.nextInt(minDamage, maxDamage);
+        }
     }
 }

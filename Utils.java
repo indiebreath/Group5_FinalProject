@@ -31,8 +31,7 @@ public class Utils {
      *                    contain -1.
      * @return returns what the user selected, if it was valid.
      */
-    public static int getChoice(String prompt, int[] validInputs) {
-        Scanner scanner = new Scanner(System.in);
+    public static int getChoice(String prompt, int[] validInputs, Scanner scanner) {
         int input = -1;
 
         while (!containsInt(validInputs, input)) {
@@ -40,7 +39,6 @@ public class Utils {
             input = scanner.nextInt();
         }
 
-        scanner.close();
         return input;
     }
 }
