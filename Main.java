@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -20,13 +21,21 @@ public class Main {
      * @param opponent the instance of the opponent character
      */
     static void combat(Character player, Character opponent, Scanner scanner) {
+        Random rand = new Random();
+
+        // loops combat until either the player or opponent are dead (at 0 hit points)
         while (player.health > 0 || opponent.health > 0) {
+            // prompt user for choice regarding what they would like to do during their turn
+            // additionally initialise dmg variable
             int[] validInputs = { 1, 2, 3 };
             int choice = Utils.getChoice("What would you like to do?\n1) Attack\n2)Use Item\n3)Run",
                     validInputs, scanner);
             int dmg;
 
+            // do damage if damage is selected, use item if that's selected, or attempt to
+            // run if that's selected
             switch (choice) {
+                // attack logic
                 case 1:
                     dmg = player.attack();
                     System.out.println(player.name + " dealt " + dmg + " to "
@@ -35,15 +44,29 @@ public class Main {
                     System.out.println(opponent.name + " is on " + opponent.health
                             + " hit points.");
                     break;
+                // use item logic
+                case 2:
+                    break;
+                // run logic
+                case 3:
+                    if (rand.nextInt(0, 5) >= 1) {
+                        System.out.println("You successfully escaped.");
+                        return;
+                    } else {
+                        System.out.println("You were unable to escape");
+                    }
+                    break;
 
                 default:
                     break;
             }
 
+            // test if player is dead early
             if (player.health == 0) {
                 break;
             }
 
+            // do enemy turn, will always attack because the enemy is dumb
             dmg = opponent.attack();
             System.out.println(opponent.name + " attacks you for " + dmg);
             player.takeDamage(dmg);
