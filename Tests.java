@@ -1,8 +1,12 @@
+import java.util.HashMap;
+
 /**
- * Tests
+ * Tests.
  *
+ * <p>
  * A class to Test various methods within the greater program without needing to
  * edit the main files.
+ * </p>
  *
  * @author Mei Waterman (indiebreath)
  */
@@ -21,7 +25,8 @@ public class Tests {
      * lowest value.
      */
     static void testDamage() {
-        Character testCharacter = new Character();
+        Character testCharacter = new Character("Test", new HashMap<String, Boolean>(), "c3",
+                10, 10);
 
         System.out.println("--- Testing Character Damage ---");
         System.out.println("TestCharacter's health: " + testCharacter.health);
@@ -56,7 +61,8 @@ public class Tests {
      * maxHealth as the maximum value.
      */
     static void testHealing() {
-        Character testCharacter = new Character();
+        Character testCharacter = new Character("Test", new HashMap<String, Boolean>(), "c3",
+                10, 10);
 
         System.out.println("--- Testing Character Healing ---");
         System.out.println("TestCharacter's health: " + testCharacter.health);
