@@ -30,7 +30,8 @@ public class Main {
             // prompt user for choice regarding what they would like to do during their turn
             // additionally initialise dmg variable
             int[] validInputs = { 1, 2, 3 };
-            int choice = Utils.getChoice("What would you like to do?\n1) Attack\n2)Use Item\n3)Run",
+            int choice = Utils.getChoice("""
+                    What would you like to do?\n1) Attack\n2) Use Item\n3) Run""",
                     validInputs, scanner);
             int dmg;
 
@@ -48,19 +49,31 @@ public class Main {
                     break;
                 // use item logic
                 case 2:
+                    // get list of combat items available to be used by the player
                     String[] availableItems = Utils.getItemIntersections(player.items, usableItems);
+                    // break out if no items are available
+                    if (availableItems[0] == null) {
+                        System.out.println("You have no items available to use.");
+                        break;
+                    }
+
+                    // prompt for which items to use
                     String output = "Which item do you want to use?\n";
+                    // tale all items in availableItems and map them to a possible choice
                     int[] itemInputs = new int[availableItems.length];
                     for (int i = 0; i < availableItems.length; i++) {
                         output += i + ") " + availableItems[i] + "\n";
                         itemInputs[i] = i;
                     }
 
+                    // get player choice based on available items
                     int itemChoice = Utils.getChoice(output, itemInputs, scanner);
 
+                    // big if statement to do different things based on what item the player picked
                     if (availableItems[itemChoice] == "potion") {
                         System.out.println("You use the potion.");
                         player.heal(rand.nextInt(1, 5));
+                        player.items.replace("potion", false);
                     }
                     break;
                 // run logic
