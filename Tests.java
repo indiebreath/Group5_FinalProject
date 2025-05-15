@@ -1,10 +1,12 @@
 import java.util.HashMap;
 
 /**
- * Tests
+ * Tests.
  *
+ * <p>
  * A class to Test various methods within the greater program without needing to
  * edit the main files.
+ * </p>
  *
  * @author Mei Waterman (indiebreath)
  */

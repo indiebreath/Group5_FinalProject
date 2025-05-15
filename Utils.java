@@ -2,9 +2,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
+ * Utils.
+ *
+ * <p>
  * A generic file containing functions that may be used regularly across the
  * projected, all separated into their own file in order to avoid clogging up
  * the main class with misceallaneous functions.
+ * </p>
  *
  * @author Mei Waterman
  */

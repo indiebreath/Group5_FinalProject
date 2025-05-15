@@ -4,8 +4,10 @@ import java.util.Random;
 /**
  * Character.
  *
+ * <p>
  * A class to contain all of the data for the player character, might be useful
  * to also act as a class or base class for NPCs.
+ * </p>
  *
  * @author Mei Waterman (indiebreath)
  */
