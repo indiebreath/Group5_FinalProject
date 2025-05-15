@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -44,5 +46,33 @@ public class Utils {
         }
 
         return input;
+    }
+
+    /**
+     * Method to get the intersection between an inventory hashmap and an array of
+     * strings, but only adds the intersection key if it's value is true. Primarily
+     * used in the combat loop to get a list of usable items that the player
+     * actually has access to.
+     *
+     * @param inventory  the inventory to search through, in the combat loop would
+     *                   be the player's inventory.
+     * @param searchKeys an array containing all of the keys that it should search
+     *                   the inventory for, in the combat loop would be an array of
+     *                   all usable combat items.
+     * @return return all items from searchKeys that exist in inventory, and whose
+     *         values in inventory are true.
+     */
+    public static String[] getItemIntersections(HashMap<String, Boolean> inventory,
+            String[] searchKeys) {
+        String[] intersections = new String[searchKeys.length];
+        int index = 0;
+        for (String x : searchKeys) {
+            if (inventory.containsKey(x) && inventory.get(x)) {
+                intersections[index] = x;
+                index++;
+            }
+        }
+
+        return intersections;
     }
 }

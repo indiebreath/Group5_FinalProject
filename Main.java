@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Main {
     static HashMap<String, Boolean> createPlayerItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
+        items.put("potion", true);
 
         return items;
     }
@@ -22,6 +23,7 @@ public class Main {
      */
     static void combat(Character player, Character opponent, Scanner scanner) {
         Random rand = new Random();
+        String[] usableItems = { "potion" };
 
         // loops combat until either the player or opponent are dead (at 0 hit points)
         while (player.health > 0 || opponent.health > 0) {
@@ -46,6 +48,20 @@ public class Main {
                     break;
                 // use item logic
                 case 2:
+                    String[] availableItems = Utils.getItemIntersections(player.items, usableItems);
+                    String output = "Which item do you want to use?\n";
+                    int[] itemInputs = new int[availableItems.length];
+                    for (int i = 0; i < availableItems.length; i++) {
+                        output += i + ") " + availableItems[i] + "\n";
+                        itemInputs[i] = i;
+                    }
+
+                    int itemChoice = Utils.getChoice(output, itemInputs, scanner);
+
+                    if (availableItems[itemChoice] == "potion") {
+                        System.out.println("You use the potion.");
+                        player.heal(rand.nextInt(1, 5));
+                    }
                     break;
                 // run logic
                 case 3:

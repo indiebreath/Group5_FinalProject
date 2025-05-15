@@ -60,6 +60,7 @@ public class Character {
      *               the remainder will be wasted.
      */
     public void heal(int amount) {
+        System.out.println("You healed for " + amount + " hit points.");
         health += amount;
         health = Math.clamp(health, 0, maxHealth);
     }
