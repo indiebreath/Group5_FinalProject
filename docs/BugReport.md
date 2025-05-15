@@ -21,3 +21,11 @@ Math.clamp function for Character's takeDamage and heal functions not properly c
 Found by: Mei Waterman
 
 Solution: have health value be set to the result of the Math.clamp function instead of calling the Math.clamp function on it's own.
+
+# Issue 4
+
+Program would bug out whenever any user input was made within the combat method, causing the entire program to crash whenever an attempt to make a choice was made.
+
+Found by: Mei Waterman
+
+Solution: have one global instance of the Scanner, which is passed around to every function that needs it rather than each function initialising and deinitialising their own instance as needed.
