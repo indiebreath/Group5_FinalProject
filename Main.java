@@ -123,10 +123,13 @@ public class Main {
         while (play) {
             switch (player.location) {
                 case "a1":
+                    // first check if the player has the flashlight or not
                     if (!player.items.get("flashlight")) {
+                        // room text
                         System.out.println("""
                                 A dim hall with rusty walls.
                                 A flashlight sits on a table.""");
+                        // initialise input and give player options
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
                                 To both the north and south are doors, the northern one wooden while
@@ -136,6 +139,8 @@ public class Main {
                                 2) Attempt the south door.
                                 3) Pick up the flashlight.
                                 """, validInputs, scanner);
+
+                        // do different things depending on choice
                         if (choice == 3) {
                             player.items.replace("flashlight", true);
                         } else if (choice == 1) {
@@ -145,7 +150,9 @@ public class Main {
                             System.out.println("The door is stuck.");
                         }
                     } else {
+                        // if player has picked up the flashlight
                         System.out.println("A dim hall with rusty walls.");
+                        // don't give player option to pick up flashlight again
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
                                 To both the north and south are doors, the northern one wooden while
@@ -154,6 +161,7 @@ public class Main {
                                 1) Attempt the east door.
                                 2) Attempt the south door.
                                 """, validInputs, scanner);
+
                         if (choice == 1) {
                             player.location = "a2";
                             System.out.println("You walk through the east door.");
