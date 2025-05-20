@@ -13,6 +13,7 @@ public class Main {
         items.put("flashlight", false);
         items.put("crowbar", false);
         items.put("battery", false);
+        items.put("medkit", false);
 
         return items;
     }
@@ -241,7 +242,8 @@ public class Main {
                             player.location = "b1";
                             System.out.println("You go through the north door.");
                         } else if (choice == 2) {
-                            System.out.println("The door is blocked.");
+                            player.location = "c2";
+                            System.out.println("You go through the east door.");
                         } else if (choice == 3) {
                             player.location = "b3";
                             System.out.println("You go through the south door.");
@@ -262,9 +264,52 @@ public class Main {
                             player.location = "b1";
                             System.out.println("You go through the north door.");
                         } else if (choice == 2) {
-                            System.out.println("The door is blocked.");
+                            player.location = "c2";
+                            System.out.println("You go through the east door.");
                         } else if (choice == 3) {
                             player.location = "b3";
+                            System.out.println("You go through the south door.");
+                        }
+                    }
+                    break;
+
+                // Bunk Room
+                case "c2":
+                    if (!player.items.get("medkit")) {
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                Old bunk beds, empty. A medkit is under a pillow.
+                                To the west and south are doors.
+                                What do you do?
+                                1) Go through the west door.
+                                2) Go through the south door.
+                                3) Pick up the medkit.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            player.items.replace("medkit", true);
+                            System.out.println("You pick up the medkit.");
+                        } else if (choice == 1) {
+                            player.location = "b2";
+                            System.out.println("You go through the west door.");
+                        } else if (choice == 2) {
+                            player.location = "c3";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                Old bunk beds, empty. To the west and south are doors.
+                                What do you do?
+                                1) Go through the west door.
+                                2) Go through the south door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "b2";
+                            System.out.println("You go through the west door.");
+                        } else if (choice == 2) {
+                            player.location = "c3";
                             System.out.println("You go through the south door.");
                         }
                     }
