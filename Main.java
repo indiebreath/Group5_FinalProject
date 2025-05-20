@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Main {
     static HashMap<String, Boolean> createPlayerItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
-        items.put("potion", true);
+        items.put("flashlight", false);
 
         return items;
     }
@@ -114,45 +114,58 @@ public class Main {
         System.out.println("Enter your name:");
         String name = scanner.nextLine();
 
-        Character player = new Character(name, createPlayerItems(), "c3", 10, 10, 1, 4);
+        Character player = new Character(name, createPlayerItems(), "a1", 10, 10, 1, 4);
         boolean play = true;
 
         // Introduction text.
-        System.out.println("""
-                You awake into darkness. Looking around, you are barely able to make
-                out the shape of a room around you. There appears to be a door to the north, another
-                one to the south, and a table in the middle of the room, which contains a lantern on
-                top of it.\n""");
 
-        combat(player, new Character("opponent", new HashMap<String, Boolean>(), "c3", 10, 10, 1, 4), scanner);
         // Main game loop.
-        /*
-         * while (play) {
-         * switch (player.location) {
-         * case "c3":
-         * if (!player.items.get("lantern")) {
-         * int[] validInputs = { 1, 2, 3, 0 };
-         * int choice = Utils.getChoice("""
-         * To both the north and south are doors, the northern one wooden
-         * while the southern one iron. On the table is a lantern.
-         * What do you do?
-         * 1) Attempt the north door.
-         * 2) Attempt the south door.
-         * 3) Pick up the lantern.
-         * 0) End game
-         * """, validInputs);
-         * 
-         * if (choice == 0) {
-         * play = false;
-         * break;
-         * }
-         * }
-         * break;
-         * 
-         * default:
-         * break;
-         * }
-         * }
-         */
+        while (play) {
+            switch (player.location) {
+                case "a1":
+                    if (!player.items.get("flashlight")) {
+                        System.out.println("""
+                                A dim hall with rusty walls.
+                                A flashlight sits on a table.""");
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                To both the north and south are doors, the northern one wooden while
+                                the southern one iron.
+                                What do you do?
+                                1) Attempt the east door.
+                                2) Attempt the south door.
+                                3) Pick up the flashlight.
+                                """, validInputs, scanner);
+                        if (choice == 3) {
+                            player.items.replace("flashlight", true);
+                        } else if (choice == 1) {
+                            player.location = "a2";
+                            System.out.println("You walk through the east door.");
+                        } else if (choice == 2) {
+                            System.out.println("The door is stuck.");
+                        }
+                    } else {
+                        System.out.println("A dim hall with rusty walls.");
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                To both the north and south are doors, the northern one wooden while
+                                the southern one iron.
+                                What do you do?
+                                1) Attempt the east door.
+                                2) Attempt the south door.
+                                """, validInputs, scanner);
+                        if (choice == 1) {
+                            player.location = "a2";
+                            System.out.println("You walk through the east door.");
+                        } else if (choice == 2) {
+                            System.out.println("The door is stuck.");
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }
