@@ -11,6 +11,7 @@ public class Main {
     static HashMap<String, Boolean> createPlayerItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
         items.put("flashlight", false);
+        items.put("crowbar", false);
 
         return items;
     }
@@ -122,6 +123,7 @@ public class Main {
         // Main game loop.
         while (play) {
             switch (player.location) {
+                // Hall Room
                 case "a1":
                     // first check if the player has the flashlight or not
                     if (!player.items.get("flashlight")) {
@@ -132,7 +134,7 @@ public class Main {
                         // initialise input and give player options
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
-                                To both the north and south are doors, the northern one wooden while
+                                To both the east and south are doors, the eastern one wooden while
                                 the southern one iron.
                                 What do you do?
                                 1) Attempt the east door.
@@ -144,7 +146,7 @@ public class Main {
                         if (choice == 3) {
                             player.items.replace("flashlight", true);
                         } else if (choice == 1) {
-                            player.location = "a2";
+                            player.location = "b1";
                             System.out.println("You walk through the east door.");
                         } else if (choice == 2) {
                             System.out.println("The door is stuck.");
@@ -163,10 +165,56 @@ public class Main {
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
-                            player.location = "a2";
+                            player.location = "b1";
                             System.out.println("You walk through the east door.");
                         } else if (choice == 2) {
                             System.out.println("The door is stuck.");
+                        }
+                    }
+                    break;
+
+                // Storage Room
+                case "b1":
+                    if (!player.items.get("crowbar")) {
+                        System.out.println("A messy room with shelves. A crowbar is by a crate.");
+
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                To both the south and west are doors, and a crowbar sits by a
+                                crate in the middle of the room.
+                                What do you do?
+                                1) Go through the west door.
+                                2) Go through the south door.
+                                3) Pick up the crowbar.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            player.items.replace("crowbar", true);
+                            System.out.println("You picked up the crowbar.");
+                        } else if (choice == 1) {
+                            player.location = "a1";
+                            System.out.println("You go through the west door.");
+                        } else if (choice == 2) {
+                            player.location = "b2";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else {
+                        System.out.println("A messy room with shelves.");
+
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                To both the south and west are doors.
+                                What do you do?
+                                1) Go through the west door.
+                                2) Go through the south door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "a1";
+                            System.out.println("You go through the west door.");
+                        } else if (choice == 2) {
+                            player.location = "b2";
+                            System.out.println("You go through the south door.");
                         }
                     }
                     break;
