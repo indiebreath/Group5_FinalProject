@@ -12,6 +12,7 @@ public class Main {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
         items.put("flashlight", false);
         items.put("crowbar", false);
+        items.put("battery", false);
 
         return items;
     }
@@ -214,6 +215,56 @@ public class Main {
                             System.out.println("You go through the west door.");
                         } else if (choice == 2) {
                             player.location = "b2";
+                            System.out.println("You go through the south door.");
+                        }
+                    }
+                    break;
+
+                // Control Room
+                case "b2":
+                    if (!player.items.get("battery")) {
+                        int[] validInputs = { 1, 2, 3, 4 };
+                        int choice = Utils.getChoice("""
+                                A room with flickering monitors. A battery is on a
+                                desk. There are doors to the north, east and south.
+                                What do you do?
+                                1) Go through the north door.
+                                2) Go through the east door.
+                                3) Go through the south door.
+                                4) Pick up the battery.
+                                """, validInputs, scanner);
+
+                        if (choice == 4) {
+                            player.items.replace("battery", true);
+                            System.out.println("You pick up the battery.");
+                        } else if (choice == 1) {
+                            player.location = "b1";
+                            System.out.println("You go through the north door.");
+                        } else if (choice == 2) {
+                            System.out.println("The door is blocked.");
+                        } else if (choice == 3) {
+                            player.location = "b3";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else {
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                A room with flickering monitors. There are
+                                doors to the north, east and south.
+                                What do you do?
+                                1) Go through the north door.
+                                2) Go through the east door.
+                                3) Go through the south door.
+                                4) Pick up the battery.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "b1";
+                            System.out.println("You go through the north door.");
+                        } else if (choice == 2) {
+                            System.out.println("The door is blocked.");
+                        } else if (choice == 3) {
+                            player.location = "b3";
                             System.out.println("You go through the south door.");
                         }
                     }
