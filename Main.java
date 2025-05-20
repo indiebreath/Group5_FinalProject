@@ -14,6 +14,8 @@ public class Main {
         items.put("crowbar", false);
         items.put("battery", false);
         items.put("medkit", false);
+        items.put("toolkit", false);
+        items.put("hazmat", false);
 
         return items;
     }
@@ -117,7 +119,7 @@ public class Main {
         System.out.println("Enter your name:");
         String name = scanner.nextLine();
 
-        Character player = new Character(name, createPlayerItems(), "a1", 10, 10, 1, 4);
+        Character player = new Character(name, createPlayerItems(), "c4", 10, 10, 1, 4);
         boolean play = true;
         boolean npcInteracted = false;
 
@@ -357,6 +359,99 @@ public class Main {
                         } else if (choice == 2) {
                             player.location = "c3";
                             System.out.println("You go through the east exit.");
+                        }
+                    }
+                    break;
+
+                // Kitchen Room
+                case "c3":
+                    if (player.items.get("toolkit")) {
+                        int[] validInputs = { 1, 2, 3, 4 };
+                        int choice = Utils.getChoice("""
+                                A messy dining area. A toolkit is on a counter.
+                                There are exits to the north, west, and south.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Go through the west exit.
+                                3) Go through the south exit.
+                                4) Pick up the toolkit.
+                                """, validInputs, scanner);
+
+                        if (choice == 4) {
+                            player.items.replace("tookit", true);
+                            System.out.println("You pick up the toolkit.");
+                        } else if (choice == 1) {
+                            player.location = "c2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "b3";
+                            System.out.println("You go through the west exit.");
+                        } else if (choice == 3) {
+                            player.location = "c4";
+                            System.out.println("You go through the south exit.");
+                        }
+                    } else {
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                A messy dining area.
+                                There are exits to the north, west, and south.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Go through the west exit.
+                                3) Go through the south exit.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "b3";
+                            System.out.println("You go through the west exit.");
+                        } else if (choice == 3) {
+                            player.location = "c4";
+                            System.out.println("You go through the south exit.");
+                        }
+                    }
+                    break;
+
+                // Hazard Room
+                case "c4":
+                    if (!player.items.get("hazmat")) {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                Signs warn of radiation in the area.
+                                There is an exit to the north and east through the radiation.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Attempt to pass through the radiation.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c3";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            System.out.println("""
+                                    You attempt to brave the radiation.
+                                    As you walk you quickly succumb to it, and die.""");
+                            play = false;
+                        }
+                    } else {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                Signs warn of radiation in the area.
+                                There is an exit to the north and east through the radiation.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Use the hazmat suit to pass through the radiation.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c3";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "d4";
+                            System.out.println(
+                                    "With the hazmat suit you easily pass through the radiation.");
                         }
                     }
                     break;
