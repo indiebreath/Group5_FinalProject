@@ -119,6 +119,7 @@ public class Main {
 
         Character player = new Character(name, createPlayerItems(), "a1", 10, 10, 1, 4);
         boolean play = true;
+        boolean npcInteracted = false;
 
         // Introduction text.
 
@@ -311,6 +312,51 @@ public class Main {
                         } else if (choice == 2) {
                             player.location = "c3";
                             System.out.println("You go through the south door.");
+                        }
+                    }
+                    break;
+
+                // Shaft room
+                case "b3":
+                    if (!npcInteracted) {
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                A tight shaft with wires. A survivor mutters about a radio.
+                                There are exits to the north and east.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Go through the east exit.
+                                3) Talk to the survivor.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            npcInteracted = true;
+                            System.out.println("""
+                                    The survivor mutters to you.
+                                    \"Radio's in the armory, need to break a crate.\"""");
+                        } else if (choice == 1) {
+                            player.location = "b2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "c3";
+                            System.out.println("You go through the east exit.");
+                        }
+                    } else {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                A tight shaft with wires. A survivor is quiet, done talking.
+                                There are exits to the north and east.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Go through the east exit.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "b2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "c3";
+                            System.out.println("You go through the east exit.");
                         }
                     }
                     break;
