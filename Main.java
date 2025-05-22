@@ -132,16 +132,14 @@ public class Main {
                 // Hall Room
                 case "a1":
                     // first check if the player has the flashlight or not
-                    if (!player.items.get("flashlight")) {
-                        // room text
-                        System.out.println("""
-                                A dim hall with rusty walls.
-                                A flashlight sits on a table.""");
+                    if (!player.items.get("flashlight") && !player.items.get("battery")) {
                         // initialise input and give player options
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
-                                To both the east and south are doors, the eastern one wooden while
-                                the southern one iron.
+                                The room is so dark you can barely see from one end to the other.
+                                You can barely make out a table which appears to have a flashlight
+                                on it. Additionally, there are doors to the south and east, though
+                                the southern door looks quite damaged.
                                 What do you do?
                                 1) Attempt the east door.
                                 2) Attempt the south door.
@@ -151,20 +149,25 @@ public class Main {
                         // do different things depending on choice
                         if (choice == 3) {
                             player.items.replace("flashlight", true);
+                            System.out.println("""
+                                    You pick up the flashlight. When you attempt to turn it on it
+                                    doesn't, evidently out of charge.""");
                         } else if (choice == 1) {
                             player.location = "b1";
                             System.out.println("You walk through the east door.");
                         } else if (choice == 2) {
-                            System.out.println("The door is stuck.");
+                            System.out.println(
+                                    "You attempt to open the southern door, but it doesn't budge.");
                         }
-                    } else {
-                        // if player has picked up the flashlight
-                        System.out.println("A dim hall with rusty walls.");
-                        // don't give player option to pick up flashlight again
+                    } else if (player.items.get("flashlight") && !player.items.get("battery")) {
+                        // if player has picked up the flashlight don't give player option to pick
+                        // up flashlight again
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                To both the north and south are doors, the northern one wooden while
-                                the southern one iron.
+                                The room is so dark you can barely see from one end to the other.
+                                You can barely make out the table you took the flashlight from, as
+                                well as doors leading to the south and east, with the southern one
+                                looking quite damaged.
                                 What do you do?
                                 1) Attempt the east door.
                                 2) Attempt the south door.
@@ -174,8 +177,30 @@ public class Main {
                             player.location = "b1";
                             System.out.println("You walk through the east door.");
                         } else if (choice == 2) {
-                            System.out.println("The door is stuck.");
+                            System.out.println(
+                                    "You attempt to open the southern door, but it doesn't budge.");
                         }
+                    } else if (player.items.get("flashlight") && player.items.get("battery")) {
+                        // if player has picked up the flashlight and the battery
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                With the charged flashlight you are able to see clearly. The room's
+                                walls are rust and damaged, as is the table you took the flashlight
+                                from and the two doors, one which leads south and appears quite
+                                damaged, and another that leads east.
+                                What do you do?
+                                1) Attempt the east door.
+                                2) Attempt the south door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "b1";
+                            System.out.println("You walk through the east door.");
+                        } else if (choice == 2) {
+                            System.out.println(
+                                    "You attempt to open the southern door, but it doesn't budge.");
+                        }
+
                     }
                     break;
 
@@ -185,14 +210,15 @@ public class Main {
                         System.out.println("A messy room with shelves. A crowbar is by a crate.");
 
                         int[] validInputs = { 1, 2, 3 };
-                        int choice = Utils.getChoice("""
-                                To both the south and west are doors, and a crowbar sits by a
-                                crate in the middle of the room.
-                                What do you do?
-                                1) Go through the west door.
-                                2) Go through the south door.
-                                3) Pick up the crowbar.
-                                """, validInputs, scanner);
+                        int choice = Utils.getChoice(
+                                """
+                                        To both the south and west are doors, and a crowbar sits by a crate in the middle of the room.
+                                        What do you do?
+                                        1) Go through the west door.
+                                        2) Go through the south door.
+                                        3) Pick up the crowbar.
+                                        """,
+                                validInputs, scanner);
 
                         if (choice == 3) {
                             player.items.replace("crowbar", true);
