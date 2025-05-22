@@ -15,7 +15,8 @@ public class Main {
         items.put("battery", false);
         items.put("medkit", false);
         items.put("toolkit", false);
-        items.put("hazmat", false);
+        items.put("hazmat suit", false);
+        items.put("radio", false);
 
         return items;
     }
@@ -119,7 +120,7 @@ public class Main {
         System.out.println("Enter your name:");
         String name = scanner.nextLine();
 
-        Character player = new Character(name, createPlayerItems(), "c4", 10, 10, 1, 4);
+        Character player = new Character(name, createPlayerItems(), "a1", 10, 10, 1, 4);
         boolean play = true;
         boolean npcInteracted = false;
 
@@ -452,6 +453,67 @@ public class Main {
                             player.location = "d4";
                             System.out.println(
                                     "With the hazmat suit you easily pass through the radiation.");
+                        }
+                    }
+                    break;
+
+                // Armoury room
+                case "d4":
+                    if (!player.items.get("crowbar") && !player.items.get("radio")) {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                A locked room with racks. A radio is in a crate, which you need
+                                some way to open.
+                                There are doors to the west and south.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the southern door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
+                            System.out.println("You go through the southern door.");
+                        }
+                    } else if (player.items.get("crowbar") && !player.items.get("radio")) {
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                A locked room with racks. A radio is in a crate, which you can
+                                open with the crowbar.
+                                There are doors to the west and south.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the southern door.
+                                3) Break open the crate.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            System.out.println("You break open the crate and pick up the radio.");
+                        } else if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
+                            System.out.println("You go through the southern door.");
+                        }
+                    } else if (player.items.get("radio")) {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                A locked room with racks.
+                                There are doors to the west and south.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the southern door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
+                            System.out.println("You go through the southern door.");
                         }
                     }
                     break;
