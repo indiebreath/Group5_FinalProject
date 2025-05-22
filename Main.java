@@ -209,6 +209,8 @@ public class Main {
                 case "b1":
                     if (!player.items.get("crowbar")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // if player does not have crowbar, and doesn't have both the flashlight
+                        // and battery
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
                                 Through the darkness you can barely make out a series of shelves
@@ -235,6 +237,8 @@ public class Main {
                         }
                     } else if (player.items.get("crowbar")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // if player has picked up the crowbar, but doesn't have both the flashlight
+                        // and battery
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
                                 Through the darkness you can barely make out a series of shelves
@@ -255,6 +259,8 @@ public class Main {
                         }
                     } else if (player.items.get("crowbar")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // if the player has both the crowbar, and does have both the flashlight
+                        // and battery
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
                                 Using the flashlight you are able to make out more details of the
@@ -279,6 +285,7 @@ public class Main {
                 // Control Room
                 case "b2":
                     if (!player.items.get("battery") && player.items.get("flashlight")) {
+                        // if the player has the flashlight but not the battery
                         int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 The room is lit by a series of flickering monitors. Some show
@@ -309,6 +316,7 @@ public class Main {
                             System.out.println("You go through the south door.");
                         }
                     } else if (!player.items.get("battery") && !player.items.get("flashlight")) {
+                        // if the player doesn't have either the battery or the flashlight
                         int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 The room is lit by a series of flickering monitors. Some show
@@ -336,6 +344,7 @@ public class Main {
                             System.out.println("You go through the south door.");
                         }
                     } else if (player.items.get("battery") && !player.items.get("flashlight")) {
+                        // if the player has the battery but not the flashlight
                         int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 The room is lit by a series of flickering monitors. Some show
@@ -361,6 +370,7 @@ public class Main {
                         }
                     } else if (player.items.get("battery") && player.items.get("flashlight")
                             && !player.items.get("paper")) {
+                        // if the player has both the battery and flashlight, but not the paper
                         int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 One wall of this room is covered in a series of flickering
@@ -394,6 +404,7 @@ public class Main {
                         }
                     } else if (player.items.get("battery") && player.items.get("flashlight")
                             && player.items.get("paper")) {
+                        // if the player has picked up the battery, flashlight, and paper
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
                                 One wall of this room is covered in a series of flickering
@@ -422,15 +433,42 @@ public class Main {
 
                 // Bunk Room
                 case "c2":
-                    if (!player.items.get("medkit")) {
-                        int[] validInputs = { 1, 2, 3 };
+                    if (!player.items.get("medkit")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // if player doesn't have the medkit, and hasn't picked up the flashlight
+                        // and the battery
+                        int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                Old bunk beds, empty. A medkit is under a pillow.
-                                To the west and south are doors.
+                                Dark silhouettes of bunk beds fill the room, leading off into
+                                almost complete darkness at the eastern wall. There are doors
+                                to the west and south, and there doesn't appear to be anything
+                                in the room.
                                 What do you do?
                                 1) Go through the west door.
                                 2) Go through the south door.
-                                3) Pick up the medkit.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "b2";
+                            System.out.println("You go through the west door.");
+                        } else if (choice == 2) {
+                            player.location = "c3";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else if (!player.items.get("medkit")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // if the player doesn't have the medkit, but has both the battery
+                        // and flashlight
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                Flashlight in hand, you are able to see a series of bunk beds
+                                leading off to the east. There appears to be enough to house
+                                twenty people. In the light, you notice a medkit underneath one
+                                of the pillows. Additionally, there are doors to the west and south.
+                                What do you do?
+                                1) Go through the west door.
+                                2) Go through the south door.
+                                3) Pick up the medkit
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -443,10 +481,14 @@ public class Main {
                             player.location = "c3";
                             System.out.println("You go through the south door.");
                         }
-                    } else {
-                        int[] validInputs = { 1, 2 };
+                    } else if (player.items.get("medkit")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // if the player has the medkit, and has the flashlight and battery
+                        int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
-                                Old bunk beds, empty. To the west and south are doors.
+                                Flashlight in hand, you are able to see a series of bunk beds
+                                leading off to the east. There appears to be enough to house
+                                twenty people. There are doors to the west and south.
                                 What do you do?
                                 1) Go through the west door.
                                 2) Go through the south door.
