@@ -464,10 +464,10 @@ public class Main {
                         int choice = Utils.getChoice("""
                                 A locked room with racks. A radio is in a crate, which you need
                                 some way to open.
-                                There are doors to the west and south.
+                                There are doors to the west and east.
                                 What do you do?
                                 1) Go through the western door.
-                                2) Go through the southern door.
+                                2) Go through the eastern door.
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -475,17 +475,17 @@ public class Main {
                             System.out.println("You go through the western door.");
                         } else if (choice == 2) {
                             player.location = "d5";
-                            System.out.println("You go through the southern door.");
+                            System.out.println("You go through the eastern door.");
                         }
                     } else if (player.items.get("crowbar") && !player.items.get("radio")) {
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
                                 A locked room with racks. A radio is in a crate, which you can
                                 open with the crowbar.
-                                There are doors to the west and south.
+                                There are doors to the west and east.
                                 What do you do?
                                 1) Go through the western door.
-                                2) Go through the southern door.
+                                2) Go through the eastern door.
                                 3) Break open the crate.
                                 """, validInputs, scanner);
 
@@ -496,24 +496,24 @@ public class Main {
                             System.out.println("You go through the western door.");
                         } else if (choice == 2) {
                             player.location = "d5";
-                            System.out.println("You go through the southern door.");
+                            System.out.println("You go through the eastern door.");
                         }
                     } else if (player.items.get("radio")) {
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
                                 A locked room with racks.
-                                There are doors to the west and south.
+                                There are doors to the west and east.
                                 What do you do?
                                 1) Go through the western door.
-                                2) Go through the southern door.
+                                2) Go through the eastern door.
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
                             player.location = "c4";
                             System.out.println("You go through the western door.");
                         } else if (choice == 2) {
-                            player.location = "d5";
-                            System.out.println("You go through the southern door.");
+                            player.location = "e4";
+                            System.out.println("You go through the eastern door.");
                         }
                     }
                     break;
