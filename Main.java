@@ -518,6 +518,41 @@ public class Main {
                     }
                     break;
 
+                // Exit room
+                case "e5":
+                    if (!player.items.get("radio")) {
+                        int[] validInputs = { 1 };
+                        int choice = Utils.getChoice("""
+                                A communication station with an antenna. You think you can use
+                                a radio to call for help.
+                                There is an exit to the north.
+                                What do you do?
+                                1) Go through the northern exit.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "e4";
+                            System.out.println("You go through the northern exit.");
+                        }
+                    } else {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                A communication station with an antenna. You can use
+                                the radio to call for help.
+                                There is an exit to the north.
+                                What do you do?
+                                1) Go through the northern exit.
+                                """, validInputs, scanner);
+
+                        if (choice == 2) {
+                            System.out.println("You called for help. You win!");
+                            play = false;
+                        } else if (choice == 1) {
+                            player.location = "e4";
+                            System.out.println("You go through the northern exit.");
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
