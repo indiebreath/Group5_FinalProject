@@ -124,6 +124,7 @@ public class Main {
         Character player = new Character(name, createPlayerItems(), "a1", 10, 10, 1, 4);
         boolean play = true;
         boolean npcInteracted = false;
+        boolean npcHealed = false;
 
         // Introduction text.
 
@@ -507,10 +508,13 @@ public class Main {
                 // Shaft room
                 case "b3":
                     if (!npcInteracted) {
+                        // if player hasn't interacted with the survivor
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
-                                A tight shaft with wires. A survivor mutters about a radio.
-                                There are exits to the north and east.
+                                You come into a tight shaft with hanging wires, some of
+                                which spark with electricity. Inside you see a dishevelled
+                                man, mumbling about something, though you can't quite make
+                                out what he's saying. There are exits to the north and east.
                                 What do you do?
                                 1) Go through the north exit.
                                 2) Go through the east exit.
@@ -520,8 +524,9 @@ public class Main {
                         if (choice == 3) {
                             npcInteracted = true;
                             System.out.println("""
-                                    The survivor mutters to you.
-                                    \"Radio's in the armory, need to break a crate.\"""");
+                                    The man looks up at you and speaks. \"Do you have a
+                                    medkit? I think I broke my leg when I stumbled in here.\"
+                                    """);
                         } else if (choice == 1) {
                             player.location = "b2";
                             System.out.println("You go through the north exit.");
@@ -529,11 +534,64 @@ public class Main {
                             player.location = "c3";
                             System.out.println("You go through the east exit.");
                         }
-                    } else {
+                    } else if (npcInteracted && player.items.get("medkit")) {
+                        // if the player has interacted with the survivor and does have the medkit
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                You come into a tight shaft with hanging wires, some of
+                                which spark with electricity. Inside you see a dishevelled
+                                man, who looked up at you hopefully. There are exits to the
+                                north and east.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Go through the east exit.
+                                3) Give the man the medkit.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            player.items.replace("medkit", false);
+                            player.items.replace("hazmat suit", true);
+                            npcHealed = true;
+                            System.out.println("""
+                                    The man says to you, \"Thank you so much. Here, take this
+                                    hazmat suit. I don't think I'll be needing it while I'm in
+                                    here.\"""");
+                        } else if (choice == 1) {
+                            player.location = "b2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "c3";
+                            System.out.println("You go through the east exit.");
+                        }
+                    } else if (npcInteracted && (!player.items.get("medkit") && !npcHealed)) {
+                        // if the player has interacted with the survivor, but doesn't have
+                        // the medkit
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                A tight shaft with wires. A survivor is quiet, done talking.
-                                There are exits to the north and east.
+                                You come into a tight shaft with hanging wires, some of
+                                which spark with electricity. Inside you see a dishevelled
+                                man, who looks up at you hopefully. There are exits to the
+                                north and east.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Go through the east exit.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "b2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "c3";
+                            System.out.println("You go through the east exit.");
+                        }
+                    } else if (npcInteracted && npcHealed) {
+                        // if the player has both interacted with and healed the npc
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                You come into a tight shaft with hanging wires, some of
+                                which spark with electricity. Inside you see a dishevelled
+                                man, who is resting an injured leg. There are exits to the
+                                north and east.
                                 What do you do?
                                 1) Go through the north exit.
                                 2) Go through the east exit.
