@@ -206,23 +206,25 @@ public class Main {
 
                 // Storage Room
                 case "b1":
-                    if (!player.items.get("crowbar")) {
-                        System.out.println("A messy room with shelves. A crowbar is by a crate.");
-
+                    if (!player.items.get("crowbar")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         int[] validInputs = { 1, 2, 3 };
-                        int choice = Utils.getChoice(
-                                """
-                                        To both the south and west are doors, and a crowbar sits by a crate in the middle of the room.
-                                        What do you do?
-                                        1) Go through the west door.
-                                        2) Go through the south door.
-                                        3) Pick up the crowbar.
-                                        """,
-                                validInputs, scanner);
+                        int choice = Utils.getChoice("""
+                                Through the darkness you can barely make out a series of shelves
+                                and crates, all of which look messy and disorganised, as if they
+                                had been hastily looted. By one of the crates you notice a crowbar,
+                                and there are doors leading to the west and south.
+                                What do you do?
+                                1) Go through the west door.
+                                2) Go through the south door.
+                                3) Pick up the crowbar.
+                                """, validInputs, scanner);
 
                         if (choice == 3) {
                             player.items.replace("crowbar", true);
-                            System.out.println("You picked up the crowbar.");
+                            System.out.println("""
+                                    You pick up the crowbar. It is decently heavy and looks sturdy
+                                    enough to open or break things.""");
                         } else if (choice == 1) {
                             player.location = "a1";
                             System.out.println("You go through the west door.");
@@ -230,12 +232,34 @@ public class Main {
                             player.location = "b2";
                             System.out.println("You go through the south door.");
                         }
-                    } else {
-                        System.out.println("A messy room with shelves.");
-
+                    } else if (player.items.get("crowbar")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                To both the south and west are doors.
+                                Through the darkness you can barely make out a series of shelves
+                                and crates, all of which look messy and disorganised, as if they
+                                had been hastily looted. There are doors to the west and south
+                                leading out of the room.
+                                What do you do?
+                                1) Go through the west door.
+                                2) Go through the south door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "a1";
+                            System.out.println("You go through the west door.");
+                        } else if (choice == 2) {
+                            player.location = "b2";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else if (player.items.get("crowbar")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                Using the flashlight you are able to make out more details of the
+                                room. The markings on the crates are faded and scratched,
+                                indicating age, and the shelving is rusty. There are two doors
+                                leading out of the room, one to the west and one to the south.
                                 What do you do?
                                 1) Go through the west door.
                                 2) Go through the south door.
