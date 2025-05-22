@@ -13,6 +13,7 @@ public class Main {
         items.put("flashlight", false);
         items.put("crowbar", false);
         items.put("battery", false);
+        items.put("paper", false);
         items.put("medkit", false);
         items.put("toolkit", false);
         items.put("hazmat suit", false);
@@ -277,11 +278,13 @@ public class Main {
 
                 // Control Room
                 case "b2":
-                    if (!player.items.get("battery")) {
+                    if (!player.items.get("battery") && player.items.get("flashlight")) {
                         int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
-                                A room with flickering monitors. A battery is on a
-                                desk. There are doors to the north, east and south.
+                                The room is lit by a series of flickering monitors. Some show
+                                camera feeds, others show system information about the bunker,
+                                while others simply show static or are blank. On a desk you
+                                notice a battery, and there are doors to the north, east, and south.
                                 What do you do?
                                 1) Go through the north door.
                                 2) Go through the east door.
@@ -291,7 +294,10 @@ public class Main {
 
                         if (choice == 4) {
                             player.items.replace("battery", true);
-                            System.out.println("You pick up the battery.");
+                            System.out.println("""
+                                    Hoping that it's charged, you pick up the battery and put it
+                                    in your flashlight, with it thankfully coming to life and
+                                    illuminating the room.""");
                         } else if (choice == 1) {
                             player.location = "b1";
                             System.out.println("You go through the north door.");
@@ -302,16 +308,103 @@ public class Main {
                             player.location = "b3";
                             System.out.println("You go through the south door.");
                         }
-                    } else {
-                        int[] validInputs = { 1, 2, 3 };
+                    } else if (!player.items.get("battery") && !player.items.get("flashlight")) {
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
-                                A room with flickering monitors. There are
-                                doors to the north, east and south.
+                                The room is lit by a series of flickering monitors. Some show
+                                camera feeds, others show system information about the bunker,
+                                while others simply show static or are blank. On a desk you
+                                notice a battery, and there are doors to the north, east, and south.
                                 What do you do?
                                 1) Go through the north door.
                                 2) Go through the east door.
                                 3) Go through the south door.
                                 4) Pick up the battery.
+                                """, validInputs, scanner);
+
+                        if (choice == 4) {
+                            player.items.replace("battery", true);
+                            System.out.println("You pick up the battery, hoping that it's charged");
+                        } else if (choice == 1) {
+                            player.location = "b1";
+                            System.out.println("You go through the north door.");
+                        } else if (choice == 2) {
+                            player.location = "c2";
+                            System.out.println("You go through the east door.");
+                        } else if (choice == 3) {
+                            player.location = "b3";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else if (player.items.get("battery") && !player.items.get("flashlight")) {
+                        int[] validInputs = { 1, 2, 3, 4 };
+                        int choice = Utils.getChoice("""
+                                The room is lit by a series of flickering monitors. Some show
+                                camera feeds, others show system information about the bunker,
+                                while others simply show static or are blank. On one of the
+                                monitors you notice a person. There are doors to the north,
+                                east, and south.
+                                What do you do?
+                                1) Go through the north door.
+                                2) Go through the east door.
+                                3) Go through the south door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "b1";
+                            System.out.println("You go through the north door.");
+                        } else if (choice == 2) {
+                            player.location = "c2";
+                            System.out.println("You go through the east door.");
+                        } else if (choice == 3) {
+                            player.location = "b3";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else if (player.items.get("battery") && player.items.get("flashlight")
+                            && !player.items.get("paper")) {
+                        int[] validInputs = { 1, 2, 3, 4 };
+                        int choice = Utils.getChoice("""
+                                One wall of this room is covered in a series of flickering
+                                monitors, some showing camera feeds, others showing system
+                                information, and others just showing static or blank screens.
+                                One of the monitors shows a person. With the light of your
+                                flashlight, you notice a piece of paper on the desk under the
+                                monitors. Additionally, there are doors to the north, east,
+                                and south.
+                                What do you do?
+                                1) Go through the north door.
+                                2) Go through the east door.
+                                3) Go through the south door.
+                                4) Pick up the piece of paper.
+                                """, validInputs, scanner);
+
+                        if (choice == 4) {
+                            player.items.replace("paper", true);
+                            System.out.println("""
+                                    You pick up the piece of paper. There is a code written on it.
+                                    """);
+                        } else if (choice == 1) {
+                            player.location = "b1";
+                            System.out.println("You go through the north door.");
+                        } else if (choice == 2) {
+                            player.location = "c2";
+                            System.out.println("You go through the east door.");
+                        } else if (choice == 3) {
+                            player.location = "b3";
+                            System.out.println("You go through the south door.");
+                        }
+                    } else if (player.items.get("battery") && player.items.get("flashlight")
+                            && player.items.get("paper")) {
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                One wall of this room is covered in a series of flickering
+                                monitors, some showing camera feeds, others showing system
+                                information, and others just showing static or blank screens.
+                                One of the monitors shows a person. Additionally, there are
+                                doors to the north, east, and south.
+                                What do you do?
+                                1) Go through the north door.
+                                2) Go through the east door.
+                                3) Go through the south door.
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
