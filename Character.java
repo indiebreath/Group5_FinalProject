@@ -92,7 +92,7 @@ public class Character {
      * @return returns a string listing off the collected items in Character's
      *         inventory.
      */
-    public String listInventory() {
+    public void listInventory() {
         String inventory = "You have:\n";
 
         for (String x : items.keySet()) {
@@ -101,6 +101,6 @@ public class Character {
             }
         }
 
-        return inventory;
+        System.out.println(inventory);
     }
 }
