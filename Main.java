@@ -1,4 +1,3 @@
-import java.awt.List;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -9,6 +8,8 @@ import java.util.Scanner;
  * @author Mei Waterman (indiebreath)
  */
 public class Main {
+    static String accessCode = "";
+
     static HashMap<String, Boolean> createPlayerItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
         items.put("flashlight", false);
@@ -21,6 +22,31 @@ public class Main {
         items.put("radio", false);
 
         return items;
+    }
+
+    static String useItem(String item) {
+        String result = "";
+        if (item == "paper") {
+            result = "The paper has a code on it: " + accessCode;
+        } else if (item == "flashlight") {
+            result = "A flashlight. The bulb seems okay, but it needs a battery to work.";
+        } else if (item == "crowbar") {
+            result = """
+                    A crowbar. Useful in prying things open, or could work as a bludgeoning weapon.
+                    """;
+        } else if (item == "battery") {
+            result = "A battery. Can be used with a flashlight to give it charge.";
+        } else if (item == "medkit") {
+            result = "A stocked medkit. Useful when one is injured.";
+        } else if (item == "toolbox") {
+            result = "A toolbox. It contains everything you might need to fix small items.";
+        } else if (item == "hazmat suit") {
+            result = "A hazmat suit. Can be used to protect yourself from environmental hazards";
+        } else if (item == "radio") {
+            result = "A radio. Can be used to call for help, if you have the access code.";
+        }
+
+        return result;
     }
 
     /**
@@ -126,7 +152,7 @@ public class Main {
         boolean play = true;
         boolean npcInteracted = false;
         boolean npcHealed = false;
-        String accessCode = Utils.generateAlphanumericString(7);
+        accessCode = Utils.generateAlphanumericString(7);
 
         // Introduction text.
 
