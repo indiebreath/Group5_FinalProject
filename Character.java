@@ -84,4 +84,23 @@ public class Character {
             return rand.nextInt(minDamage, maxDamage);
         }
     }
+
+    /**
+     * Method to get all collected items in the Character's inventory and returns
+     * the list as a string.
+     *
+     * @return returns a string listing off the collected items in Character's
+     *         inventory.
+     */
+    public String listInventory() {
+        String inventory = "You have:\n";
+
+        for (String x : items.keySet()) {
+            if (items.get(x)) {
+                inventory += " - " + x + "\n";
+            }
+        }
+
+        return inventory;
+    }
 }

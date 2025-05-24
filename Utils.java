@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -73,5 +74,27 @@ public class Utils {
         }
 
         return intersections;
+    }
+
+    /**
+     * Method to generate random alphanumeric string of a given length.
+     *
+     * @param length the length of the string to generate
+     * @return the generated string
+     */
+    public static String generateAlphanumericString(int length) {
+        // numeral '0'
+        int leftLimit = 48;
+        // letter 'z'
+        int rightLimit = 122;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(length)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString;
     }
 }

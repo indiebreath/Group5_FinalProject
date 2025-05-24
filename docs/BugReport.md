@@ -37,3 +37,11 @@ Program would bug out whenever any user input was made within the combat method,
 Found by: Mei Waterman
 
 Solution: have one global instance of the Scanner, which is passed around to every function that needs it rather than each function initialising and deinitialising their own instance as needed.
+
+# Issue 6
+
+Program would hang whenever entering the hazard room, whether it be from normal traversal or by directly setting the player's position.
+
+Found by: Mei Waterman
+
+Solution: actually add the hazmat suit to the player's inventory, which wasn't initialised thuis returned null. No idea why it just hung here but errored on others but oh well.
