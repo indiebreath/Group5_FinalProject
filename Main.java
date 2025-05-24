@@ -820,12 +820,16 @@ public class Main {
 
                 // Armoury room
                 case "d4":
-                    if (!player.items.get("crowbar") && !player.items.get("radio")) {
+                    if (!player.items.get("crowbar")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // if player doesn't have the crowbar, and doesn't have a charged flashlight
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                A locked room with racks. A radio is in a crate, which you need
-                                some way to open.
-                                There are doors to the west and east.
+                                You can't make out much of the room in the darkness, but you can
+                                make out the shapes of lockers covering the walls, some of them
+                                fully enclosed and others that you can barely see into. In one of
+                                them you notice the radio that the survivor was talking about, but
+                                the locker it's in is locked. There are doors to the east and west.
                                 What do you do?
                                 1) Go through the western door.
                                 2) Go through the eastern door.
@@ -838,20 +842,31 @@ public class Main {
                             player.location = "d5";
                             System.out.println("You go through the eastern door.");
                         }
-                    } else if (player.items.get("crowbar") && !player.items.get("radio")) {
+                    } else if (player.items.get("crowbar") && !player.items.get("radio")
+                            && !player.items.get("toolbox")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // player does have the crowbar, but doesn't have the radio, doesn't have
+                        // the toolbox, and doesn't have a charged flashlight
                         int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
-                                A locked room with racks. A radio is in a crate, which you can
-                                open with the crowbar.
-                                There are doors to the west and east.
+                                You can't make out much of the room in the darkness, but you can
+                                make out the shapes of lockers covering the walls, some of them
+                                fully enclosed and others that you can barely see into. In one of
+                                them you notice the radio that the survivor was talking about, but
+                                the locker it's in is locked. There are doors to the east and west.
                                 What do you do?
                                 1) Go through the western door.
                                 2) Go through the eastern door.
-                                3) Break open the crate.
+                                3) Use the crowbar to pry open the locker.
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
-                            System.out.println("You break open the crate and pick up the radio.");
+                            player.items.replace("radio", true);
+                            System.out.println("""
+                                    You use the crowbar to pry open the locker. It takes some
+                                    effort, but you eventually get it open and take the radio
+                                    inside. Looking it over it appears to be broken, but seems
+                                    fixable with some tools.""");
                         } else if (choice == 1) {
                             player.location = "c4";
                             System.out.println("You go through the western door.");
@@ -859,11 +874,47 @@ public class Main {
                             player.location = "d5";
                             System.out.println("You go through the eastern door.");
                         }
-                    } else if (player.items.get("radio")) {
+                    } else if (player.items.get("crowbar") && !player.items.get("radio")
+                            && !player.items.get("toolbox")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // player does have the crowbar, but doesn't have the radio, does have
+                        // the toolbox, and doesn't have a charged flashlight
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                You can't make out much of the room in the darkness, but you can
+                                make out the shapes of lockers covering the walls, some of them
+                                fully enclosed and others that you can barely see into. In one of
+                                them you notice the radio that the survivor was talking about, but
+                                the locker it's in is locked. There are doors to the east and west.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the eastern door.
+                                3) Use the crowbar to pry open the locker.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            player.items.replace("radio", true);
+                            System.out.println("""
+                                    You use the crowbar to pry open the locker. It takes some
+                                    effort, but you eventually get it open and take the radio
+                                    inside. Looking it over it appears to be broken, but you
+                                    easily fix it with your toolbox.""");
+                        } else if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
+                            System.out.println("You go through the eastern door.");
+                        }
+                    } else if (player.items.get("radio")
+                            && (!player.items.get("flashlight") && player.items.get("battery"))) {
+                        // player has the radio, but not a charged flashlight
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                A locked room with racks.
-                                There are doors to the west and east.
+                                You can't make out much of the room in the darkness, but you can
+                                make out the shapes of lockers covering the walls, some of them
+                                fully enclosed and others that you can barely see into. There are
+                                doors to the east and west.
                                 What do you do?
                                 1) Go through the western door.
                                 2) Go through the eastern door.
@@ -873,7 +924,117 @@ public class Main {
                             player.location = "c4";
                             System.out.println("You go through the western door.");
                         } else if (choice == 2) {
-                            player.location = "e4";
+                            player.location = "d5";
+                            System.out.println("You go through the eastern door.");
+                        }
+                    } else if (!player.items.get("crowbar")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // if player doesn't have the crowbar, but does have a charged flashlight
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                Thanks to your flashlight you can see that the room is some kind
+                                of armour. Locker fill the room, some that are fully enclosed, and
+                                others that aren't, though almost all of them have been looted. In
+                                one of them you notice the radio that the survivor was talking
+                                about, but the locker it's in is locked. There are doors to the
+                                east and west.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the eastern door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
+                            System.out.println("You go through the eastern door.");
+                        }
+                    } else if (player.items.get("crowbar") && !player.items.get("radio")
+                            && !player.items.get("toolbox")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // player does have the crowbar, but doesn't have the radio, doesn't have
+                        // the toolbox, and does have a charged flashlight
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                Thanks to your flashlight you can see that the room is some kind
+                                of armour. Locker fill the room, some that are fully enclosed, and
+                                others that aren't, though almost all of them have been looted. In
+                                one of them you notice the radio that the survivor was talking
+                                about, but the locker it's in is locked. There are doors to the
+                                east and west.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the eastern door.
+                                3) Use the crowbar to pry open the locker.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            player.items.replace("radio", true);
+                            System.out.println("""
+                                    You use the crowbar to pry open the locker. It takes some
+                                    effort, but you eventually get it open and take the radio
+                                    inside. Looking it over it appears to be broken, but seems
+                                    fixable with some tools.""");
+                        } else if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
+                            System.out.println("You go through the eastern door.");
+                        }
+                    } else if (player.items.get("crowbar") && !player.items.get("radio")
+                            && player.items.get("toolbox")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // player does have the crowbar, but doesn't have the radio, does have
+                        // the toolbox, and does have a charged flashlight
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                Thanks to your flashlight you can see that the room is some kind
+                                of armour. Locker fill the room, some that are fully enclosed, and
+                                others that aren't, though almost all of them have been looted. In
+                                one of them you notice the radio that the survivor was talking
+                                about, but the locker it's in is locked. There are doors to the
+                                east and west.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the eastern door.
+                                3) Use the crowbar to pry open the locker.
+                                """, validInputs, scanner);
+
+                        if (choice == 3) {
+                            player.items.replace("radio", true);
+                            System.out.println("""
+                                    You use the crowbar to pry open the locker. It takes some
+                                    effort, but you eventually get it open and take the radio
+                                    inside. Looking it over it appears to be broken, but you
+                                    easily fix it with your toolbox.""");
+                        } else if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
+                            System.out.println("You go through the eastern door.");
+                        }
+                    } else if (player.items.get("radio")
+                            && (!player.items.get("flashlight") && player.items.get("battery"))) {
+                        // player has the radio, and a charged flashlight
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                Thanks to your flashlight you can see that the room is some kind
+                                of armour. Locker fill the room, some that are fully enclosed, and
+                                others that aren't, though almost all of them have been looted.
+                                There are doors to the east and west.
+                                What do you do?
+                                1) Go through the western door.
+                                2) Go through the eastern door.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c4";
+                            System.out.println("You go through the western door.");
+                        } else if (choice == 2) {
+                            player.location = "d5";
                             System.out.println("You go through the eastern door.");
                         }
                     }
