@@ -15,7 +15,7 @@ public class Main {
         items.put("battery", false);
         items.put("paper", false);
         items.put("medkit", false);
-        items.put("toolkit", false);
+        items.put("toolbox", false);
         items.put("hazmat suit", false);
         items.put("radio", false);
 
@@ -609,11 +609,16 @@ public class Main {
 
                 // Kitchen Room
                 case "c3":
-                    if (player.items.get("toolkit")) {
+                    if (!player.items.get("toolbox") && !player.items.get("radio")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // if player doesn't have toolbox, radio, flashlight, or battery
                         int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
-                                A messy dining area. A toolkit is on a counter.
-                                There are exits to the north, west, and south.
+                                Cookware clatters around your feet as you stumble your way
+                                through the dark kitchen. Running your hand across the
+                                counter to help you navigate, it brushes against a toolbox.
+                                You are also able to barely see doors to the north, west,
+                                and south.
                                 What do you do?
                                 1) Go through the north exit.
                                 2) Go through the west exit.
@@ -622,8 +627,8 @@ public class Main {
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
-                            player.items.replace("tookit", true);
-                            System.out.println("You pick up the toolkit.");
+                            player.items.replace("toolbox", true);
+                            System.out.println("You pick up the toolbox.");
                         } else if (choice == 1) {
                             player.location = "c2";
                             System.out.println("You go through the north exit.");
@@ -634,15 +639,124 @@ public class Main {
                             player.location = "c4";
                             System.out.println("You go through the south exit.");
                         }
-                    } else {
-                        int[] validInputs = { 1, 2, 3 };
+                    } else if (!player.items.get("toolbox") && player.items.get("radio")
+                            && (!player.items.get("flashlight") && !player.items.get("batter"))) {
+                        // if player doesn't have the toolbox, does have the radio, and doesn't
+                        // have a charged flashlight
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
-                                A messy dining area.
-                                There are exits to the north, west, and south.
+                                Cookware clatters around your feet as you stumble your way
+                                through the dark kitchen. Running your hand across the
+                                counter to help you navigate, it brushes against a toolbox.
+                                You are also able to barely see doors to the north, west,
+                                and south.
                                 What do you do?
                                 1) Go through the north exit.
                                 2) Go through the west exit.
                                 3) Go through the south exit.
+                                4) Pick up the toolkit.
+                                """, validInputs, scanner);
+
+                        if (choice == 4) {
+                            player.items.replace("toolbox", true);
+                            System.out.println(
+                                    "You pick up the toolbox and use it to fix the radio.");
+                        } else if (choice == 1) {
+                            player.location = "c2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "b3";
+                            System.out.println("You go through the west exit.");
+                        } else if (choice == 3) {
+                            player.location = "c4";
+                            System.out.println("You go through the south exit.");
+                        }
+
+                    } else if (player.items.get("toolbox")
+                            && (!player.items.get("flashlight") && !player.items.get("battery"))) {
+                        // if player has picked up the toolbox, but hasn't picked up the radio,
+                        // or has a charged flashlight
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                Cookware clatters around your feet as you stumble your way
+                                through the dark kitchen. You run your hand across the
+                                counter to help you navigate and are able to barely see
+                                doors to the north, west, and south.
+                                What do you do?
+                                1) Go through the north exit.
+                                2) Go through the west exit.
+                                3) Go through the south exit.
+                                """, validInputs, scanner);
+
+                        if (choice == 1) {
+                            player.location = "c2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "b3";
+                            System.out.println("You go through the west exit.");
+                        } else if (choice == 3) {
+                            player.location = "c4";
+                            System.out.println("You go through the south exit.");
+                        }
+                    } else if (!player.items.get("toolbox") && !player.items.get("radio")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // if player doesn't have the toolbox, doesn't have the radio, but does
+                        // have a charged bettery
+                        int[] validInputs = { 1, 2, 3, 4 };
+                        int choice = Utils.getChoice("""
+                                You come into a cluttered kitchen. Pots and pans are strewn about
+                                and there is some rotting food on the stoves. As you walk through
+                                you notice a toolbox sitting on one of the counters, and doors to
+                                the north, west, and south.
+                                """, validInputs, scanner);
+
+                        if (choice == 4) {
+                            player.items.replace("toolbox", true);
+                            System.out.println("You pick up the toolbox");
+                        } else if (choice == 1) {
+                            player.location = "c2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "b3";
+                            System.out.println("You go through the west exit.");
+                        } else if (choice == 3) {
+                            player.location = "c4";
+                            System.out.println("You go through the south exit.");
+                        }
+                    } else if (!player.items.get("toolbox") && player.items.get("radio")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // if player doesn't have the toolbox, but does have the radio, and does
+                        // have a charged flashlight
+                        int[] validInputs = { 1, 2, 3, 4 };
+                        int choice = Utils.getChoice("""
+                                You come into a cluttered kitchen. Pots and pans are strewn about
+                                and there is some rotting food on the stoves. As you walk through
+                                you notice a toolbox sitting on one of the counters, and doors to
+                                the north, west, and south.
+                                """, validInputs, scanner);
+
+                        if (choice == 4) {
+                            player.items.replace("toolbox", true);
+                            System.out.println(
+                                    "You pick up the toolbox and use it to fix the radio.");
+                        } else if (choice == 1) {
+                            player.location = "c2";
+                            System.out.println("You go through the north exit.");
+                        } else if (choice == 2) {
+                            player.location = "b3";
+                            System.out.println("You go through the west exit.");
+                        } else if (choice == 3) {
+                            player.location = "c4";
+                            System.out.println("You go through the south exit.");
+                        }
+                    } else if (player.items.get("toolbox")
+                            && (player.items.get("flashlight") && player.items.get("battery"))) {
+                        // if player has the toolbox and a charged flashlight
+                        int[] validInputs = { 1, 2, 3 };
+                        int choice = Utils.getChoice("""
+                                You come into a cluttered kitchen. Pots and pans are strewn about
+                                and there is some rotting food on the stoves. There are doors to
+                                the north, west, and south.
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -663,8 +777,10 @@ public class Main {
                     if (!player.items.get("hazmat")) {
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                Signs warn of radiation in the area.
-                                There is an exit to the north and east through the radiation.
+                                You enter a room with a flickering illuminating it. There are
+                                radiation signs encompassing the eastern part of the room, with
+                                a hallway past them. Another door is to the north, with no warning
+                                signs in it's direction.
                                 What do you do?
                                 1) Go through the north exit.
                                 2) Attempt to pass through the radiation.
@@ -682,8 +798,10 @@ public class Main {
                     } else {
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                Signs warn of radiation in the area.
-                                There is an exit to the north and east through the radiation.
+                                You enter a room with a flickering illuminating it. There are
+                                radiation signs encompassing the eastern part of the room, with
+                                a hallway past them. Another door is to the north, with no warning
+                                signs in it's direction.
                                 What do you do?
                                 1) Go through the north exit.
                                 2) Use the hazmat suit to pass through the radiation.
