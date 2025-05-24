@@ -125,6 +125,7 @@ public class Main {
         boolean play = true;
         boolean npcInteracted = false;
         boolean npcHealed = false;
+        String accessCode = Utils.generateAlphanumericString(7);
 
         // Introduction text.
 
@@ -1034,44 +1035,86 @@ public class Main {
                             player.location = "c4";
                             System.out.println("You go through the western door.");
                         } else if (choice == 2) {
-                            player.location = "d5";
+                            player.location = "e4";
                             System.out.println("You go through the eastern door.");
                         }
                     }
                     break;
 
                 // Exit room
-                case "e5":
+                case "e4":
                     if (!player.items.get("radio")) {
+                        // player doesn't have the radio
                         int[] validInputs = { 1 };
                         int choice = Utils.getChoice("""
-                                A communication station with an antenna. You think you can use
-                                a radio to call for help.
-                                There is an exit to the north.
+                                You come into a communication room lit by some lights. There is a
+                                console with various inputs, one of which is labelled 'radio'.
+                                There is only one exit to the room, which is to the west.
                                 What do you do?
-                                1) Go through the northern exit.
+                                1) Go through the western exit.
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
-                            player.location = "e4";
-                            System.out.println("You go through the northern exit.");
+                            player.location = "d4";
+                            System.out.println("You go through the western exit.");
                         }
-                    } else {
+                    } else if (player.items.get("radio") && !player.items.get("toolbox")) {
+                        // player has the radio but not the toolbox
                         int[] validInputs = { 1, 2 };
                         int choice = Utils.getChoice("""
-                                A communication station with an antenna. You can use
-                                the radio to call for help.
-                                There is an exit to the north.
+                                You come into a communication room lit by some lights. There is a
+                                console with various inputs, one of which is labelled 'radio',
+                                which you think refers to the radio you found in the armoury. There
+                                is only on exit to the room, which is to the west.
                                 What do you do?
-                                1) Go through the northern exit.
+                                1) Go through the western exit.
+                                2) Plug the radio into the console.
                                 """, validInputs, scanner);
 
                         if (choice == 2) {
-                            System.out.println("You called for help. You win!");
-                            play = false;
+                            System.out.println("""
+                                    You plug the radio into the console, but nothing happens. It
+                                    appears that the radio is too broken to work, but does look
+                                    like it can be fixed with some tools.""");
                         } else if (choice == 1) {
                             player.location = "e4";
-                            System.out.println("You go through the northern exit.");
+                            System.out.println("You go through the western exit.");
+                        }
+                    } else if (player.items.get("radio") && player.items.get("toolbox")) {
+                        // player has the radio and the toolbox
+                        int[] validInputs = { 1, 2 };
+                        int choice = Utils.getChoice("""
+                                You come into a communication room lit by some lights. There is a
+                                console with various inputs, one of which is labelled 'radio',
+                                which you think refers to the radio you found in the armoury. There
+                                is only on exit to the room, which is to the west.
+                                What do you do?
+                                1) Go through the western exit.
+                                2) Plug the radio into the console.
+                                """, validInputs, scanner);
+
+                        if (choice == 2) {
+                            System.out.println("""
+                                    You plug the radio into the console, which whirs to life and
+                                    begins interfacing with the radio. After a few seconds the
+                                    display changes and the text \"Please enter access code.\"
+                                    appears on the screen.""");
+
+                            System.out.println("Enter code:");
+                            String codeInput = scanner.nextLine();
+                            if (codeInput == accessCode) {
+                                System.out.println("""
+                                        The console accepts the code and the radio comes to life
+                                        with static. After a few seconds the static is replaced by
+                                        rythmic beeping, a morse code message asking for help.""");
+                                System.out.println("Congrats, you won by calling for help.");
+                                play = false;
+                            } else {
+                                System.out.println("The console rejects the code.");
+                            }
+                        } else if (choice == 1) {
+                            player.location = "e4";
+                            System.out.println("You go through the western exit.");
                         }
                     }
                     break;
