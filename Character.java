@@ -1,5 +1,5 @@
-import java.util.HashMap;
 import java.util.Random;
+import java.util.HashMap;
 
 /**
  * Character.
