@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  * Main.
@@ -12,7 +12,7 @@ public class Main {
     static HashMap<String, Boolean> createPlayerItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
         items.put("flashlight", false);
-        items.put("crowbar", false);
+        items.put("crowbar", true);
         items.put("battery", false);
         items.put("paper", false);
         items.put("medkit", false);
@@ -55,6 +55,21 @@ public class Main {
         return result;
     }
 
+    static String pickItem(GameCharacter player, Scanner scanner) {
+        String[] inventory = player.getInventory();
+
+        String display = "Which item do you want to use?\n";
+        int[] validInputs = new int[inventory.length];
+        for (int i = 0; i < inventory.length; i++) {
+            validInputs[i] = i++;
+            display += (i++) + ") " + inventory[i] + "\n";
+        }
+
+        int choice = Utils.getChoice(display, validInputs, scanner);
+        String inspect = useItem(inventory[choice--]);
+        return inspect;
+    }
+
     /**
      * Main method. Program start and what runs and calls all other methods.
      *
@@ -66,7 +81,7 @@ public class Main {
         System.out.println("Enter your name:");
         String name = scanner.nextLine();
 
-        Character player = new Character(name, createPlayerItems(), "a1", 10, 10, 1, 4);
+        GameCharacter player = new GameCharacter(name, createPlayerItems(), "a1", 10, 10, 1, 4);
         boolean play = true;
         boolean npcInteracted = false;
         boolean npcHealed = false;
@@ -82,7 +97,7 @@ public class Main {
                     // first check if the player has the flashlight or not
                     if (!player.items.get("flashlight") && !player.items.get("battery")) {
                         // initialise input and give player options
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 The room is so dark you can barely see from one end to the other.
                                 You can barely make out a table which appears to have a flashlight
@@ -94,6 +109,7 @@ public class Main {
                                 3) Pick up the flashlight.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         // do different things depending on choice
@@ -110,6 +126,8 @@ public class Main {
                                     "You attempt to open the southern door, but it doesn't budge.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("flashlight") && !player.items.get("battery")) {
                         // if player has picked up the flashlight don't give player option to pick
