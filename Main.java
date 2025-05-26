@@ -12,7 +12,7 @@ public class Main {
     static HashMap<String, Boolean> createPlayerItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
         items.put("flashlight", false);
-        items.put("crowbar", true);
+        items.put("crowbar", false);
         items.put("battery", false);
         items.put("paper", false);
         items.put("medkit", false);
@@ -57,6 +57,9 @@ public class Main {
 
     static String pickItem(GameCharacter player, Scanner scanner) {
         String[] inventory = player.getInventory();
+        if (inventory.length == 0) {
+            return "You don't have any items to inspect.";
+        }
 
         String display = "Which item do you want to use?\n";
         int[] validInputs = new int[inventory.length];
@@ -133,7 +136,7 @@ public class Main {
                     } else if (player.items.get("flashlight") && !player.items.get("battery")) {
                         // if player has picked up the flashlight don't give player option to pick
                         // up flashlight again
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 The room is so dark you can barely see from one end to the other.
                                 You can barely make out the table you took the flashlight from, as
@@ -144,6 +147,7 @@ public class Main {
                                 2) Attempt the south door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -154,10 +158,12 @@ public class Main {
                                     "You attempt to open the southern door, but it doesn't budge.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("flashlight") && player.items.get("battery")) {
                         // if player has picked up the flashlight and the battery
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 With the charged flashlight you are able to see clearly. The room's
                                 walls are rust and damaged, as is the table you took the flashlight
@@ -168,6 +174,7 @@ public class Main {
                                 2) Attempt the south door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -178,8 +185,9 @@ public class Main {
                                     "You attempt to open the southern door, but it doesn't budge.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
-
                     }
                     break;
 
@@ -189,7 +197,7 @@ public class Main {
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // if player does not have crowbar, and doesn't have both the flashlight
                         // and battery
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 Through the darkness you can barely make out a series of shelves
                                 and crates, all of which look messy and disorganised, as if they
@@ -201,6 +209,7 @@ public class Main {
                                 3) Pick up the crowbar.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -216,12 +225,14 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("crowbar")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // if player has picked up the crowbar, but doesn't have both the flashlight
                         // and battery
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 Through the darkness you can barely make out a series of shelves
                                 and crates, all of which look messy and disorganised, as if they
@@ -232,6 +243,7 @@ public class Main {
                                 2) Go through the south door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -242,12 +254,14 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("crowbar")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // if the player has both the crowbar, and does have both the flashlight
                         // and battery
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 Using the flashlight you are able to make out more details of the
                                 room. The markings on the crates are faded and scratched,
@@ -256,6 +270,9 @@ public class Main {
                                 What do you do?
                                 1) Go through the west door.
                                 2) Go through the south door.
+
+                                3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -266,6 +283,8 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
@@ -274,7 +293,7 @@ public class Main {
                 case "b2":
                     if (!player.items.get("battery") && player.items.get("flashlight")) {
                         // if the player has the flashlight but not the battery
-                        int[] validInputs = { 1, 2, 3, 4, 5 };
+                        int[] validInputs = { 1, 2, 3, 4, 5, 6 };
                         int choice = Utils.getChoice("""
                                 The room is lit by a series of flickering monitors. Some show
                                 camera feeds, others show system information about the bunker,
@@ -287,6 +306,7 @@ public class Main {
                                 4) Pick up the battery.
 
                                 5) List inventory
+                                6) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
@@ -306,10 +326,12 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 5) {
                             player.listInventory();
+                        } else if (choice == 6) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (!player.items.get("battery") && !player.items.get("flashlight")) {
                         // if the player doesn't have either the battery or the flashlight
-                        int[] validInputs = { 1, 2, 3, 4, 5 };
+                        int[] validInputs = { 1, 2, 3, 4, 5, 6 };
                         int choice = Utils.getChoice("""
                                 The room is lit by a series of flickering monitors. Some show
                                 camera feeds, others show system information about the bunker,
@@ -322,6 +344,7 @@ public class Main {
                                 4) Pick up the battery.
 
                                 5) List inventory
+                                6) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
@@ -338,10 +361,12 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 5) {
                             player.listInventory();
+                        } else if (choice == 6) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("battery") && !player.items.get("flashlight")) {
                         // if the player has the battery but not the flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 The room is lit by a series of flickering monitors. Some show
                                 camera feeds, others show system information about the bunker,
@@ -354,6 +379,7 @@ public class Main {
                                 3) Go through the south door.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -367,11 +393,13 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("battery") && player.items.get("flashlight")
                             && !player.items.get("paper")) {
                         // if the player has both the battery and flashlight, but not the paper
-                        int[] validInputs = { 1, 2, 3, 4, 5 };
+                        int[] validInputs = { 1, 2, 3, 4, 5, 6 };
                         int choice = Utils.getChoice("""
                                 One wall of this room is covered in a series of flickering
                                 monitors, some showing camera feeds, others showing system
@@ -387,6 +415,7 @@ public class Main {
                                 4) Pick up the piece of paper.
 
                                 5) List inventory
+                                6) inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
@@ -405,11 +434,13 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 5) {
                             player.listInventory();
+                        } else if (choice == 6) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("battery") && player.items.get("flashlight")
                             && player.items.get("paper")) {
                         // if the player has picked up the battery, flashlight, and paper
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 One wall of this room is covered in a series of flickering
                                 monitors, some showing camera feeds, others showing system
@@ -422,6 +453,7 @@ public class Main {
                                 3) Go through the south door.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -435,6 +467,8 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
@@ -445,7 +479,7 @@ public class Main {
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // if player doesn't have the medkit, and hasn't picked up the flashlight
                         // and the battery
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 Dark silhouettes of bunk beds fill the room, leading off into
                                 almost complete darkness at the eastern wall. There are doors
@@ -454,6 +488,9 @@ public class Main {
                                 What do you do?
                                 1) Go through the west door.
                                 2) Go through the south door.
+
+                                3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -464,12 +501,14 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (!player.items.get("medkit")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // if the player doesn't have the medkit, but has both the battery
                         // and flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 Flashlight in hand, you are able to see a series of bunk beds
                                 leading off to the east. There appears to be enough to house
@@ -481,6 +520,7 @@ public class Main {
                                 3) Pick up the medkit
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -494,11 +534,13 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("medkit")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // if the player has the medkit, and has the flashlight and battery
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 Flashlight in hand, you are able to see a series of bunk beds
                                 leading off to the east. There appears to be enough to house
@@ -508,6 +550,7 @@ public class Main {
                                 2) Go through the south door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -518,6 +561,8 @@ public class Main {
                             System.out.println("You go through the south door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
@@ -526,7 +571,7 @@ public class Main {
                 case "b3":
                     if (!npcInteracted) {
                         // if player hasn't interacted with the survivor
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 You come into a tight shaft with hanging wires, some of
                                 which spark with electricity. Inside you see a dishevelled
@@ -537,7 +582,8 @@ public class Main {
                                 2) Go through the east exit.
                                 3) Talk to the survivor.
 
-                                4) list inventory
+                                4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -552,10 +598,14 @@ public class Main {
                         } else if (choice == 2) {
                             player.location = "c3";
                             System.out.println("You go through the east exit.");
+                        } else if (choice == 4) {
+                            player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (npcInteracted && player.items.get("medkit")) {
                         // if the player has interacted with the survivor and does have the medkit
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 You come into a tight shaft with hanging wires, some of
                                 which spark with electricity. Inside you see a dishevelled
@@ -567,6 +617,7 @@ public class Main {
                                 3) Give the man the medkit.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -586,11 +637,13 @@ public class Main {
                             System.out.println("You go through the east exit.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (npcInteracted && (!player.items.get("medkit") && !npcHealed)) {
                         // if the player has interacted with the survivor, but doesn't have
                         // the medkit
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You come into a tight shaft with hanging wires, some of
                                 which spark with electricity. Inside you see a dishevelled
@@ -601,6 +654,7 @@ public class Main {
                                 2) Go through the east exit.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -611,10 +665,12 @@ public class Main {
                             System.out.println("You go through the east exit.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (npcInteracted && npcHealed) {
                         // if the player has both interacted with and healed the npc
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You come into a tight shaft with hanging wires, some of
                                 which spark with electricity. Inside you see a dishevelled
@@ -625,6 +681,7 @@ public class Main {
                                 2) Go through the east exit.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -635,6 +692,8 @@ public class Main {
                             System.out.println("You go through the east exit.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
@@ -644,7 +703,7 @@ public class Main {
                     if (!player.items.get("toolbox") && !player.items.get("radio")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // if player doesn't have toolbox, radio, flashlight, or battery
-                        int[] validInputs = { 1, 2, 3, 4, 5 };
+                        int[] validInputs = { 1, 2, 3, 4, 5, 6 };
                         int choice = Utils.getChoice("""
                                 Cookware clatters around your feet as you stumble your way
                                 through the dark kitchen. Running your hand across the
@@ -658,6 +717,7 @@ public class Main {
                                 4) Pick up the toolkit.
 
                                 5) List inventory
+                                6) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
@@ -674,12 +734,14 @@ public class Main {
                             System.out.println("You go through the south exit.");
                         } else if (choice == 5) {
                             player.listInventory();
+                        } else if (choice == 6) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (!player.items.get("toolbox") && player.items.get("radio")
                             && (!player.items.get("flashlight") && !player.items.get("batter"))) {
                         // if player doesn't have the toolbox, does have the radio, and doesn't
                         // have a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4, 5 };
+                        int[] validInputs = { 1, 2, 3, 4, 5, 6 };
                         int choice = Utils.getChoice("""
                                 Cookware clatters around your feet as you stumble your way
                                 through the dark kitchen. Running your hand across the
@@ -693,6 +755,7 @@ public class Main {
                                 4) Pick up the toolkit.
 
                                 5) List inventory
+                                6) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
@@ -710,13 +773,14 @@ public class Main {
                             System.out.println("You go through the south exit.");
                         } else if (choice == 5) {
                             player.listInventory();
+                        } else if (choice == 6) {
+                            System.out.println(pickItem(player, scanner));
                         }
-
                     } else if (player.items.get("toolbox")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // if player has picked up the toolbox, but hasn't picked up the radio,
                         // or has a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 Cookware clatters around your feet as you stumble your way
                                 through the dark kitchen. You run your hand across the
@@ -728,6 +792,7 @@ public class Main {
                                 3) Go through the south exit.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -741,12 +806,14 @@ public class Main {
                             System.out.println("You go through the south exit.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (!player.items.get("toolbox") && !player.items.get("radio")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // if player doesn't have the toolbox, doesn't have the radio, but does
                         // have a charged bettery
-                        int[] validInputs = { 1, 2, 3, 4, 5 };
+                        int[] validInputs = { 1, 2, 3, 4, 5, 6 };
                         int choice = Utils.getChoice("""
                                 You come into a cluttered kitchen. Pots and pans are strewn about
                                 and there is some rotting food on the stoves. As you walk through
@@ -759,6 +826,7 @@ public class Main {
                                 4) Pick up the toolbox.
 
                                 5) List inventory
+                                6) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
@@ -775,12 +843,14 @@ public class Main {
                             System.out.println("You go through the south exit.");
                         } else if (choice == 5) {
                             player.listInventory();
+                        } else if (choice == 6) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (!player.items.get("toolbox") && player.items.get("radio")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // if player doesn't have the toolbox, but does have the radio, and does
                         // have a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4, 5 };
+                        int[] validInputs = { 1, 2, 3, 4, 5, 6 };
                         int choice = Utils.getChoice("""
                                 You come into a cluttered kitchen. Pots and pans are strewn about
                                 and there is some rotting food on the stoves. As you walk through
@@ -793,6 +863,7 @@ public class Main {
                                 4) Pick up the toolbox.
 
                                 5) List inventory
+                                6) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 4) {
@@ -810,11 +881,13 @@ public class Main {
                             System.out.println("You go through the south exit.");
                         } else if (choice == 5) {
                             player.listInventory();
+                        } else if (choice == 6) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("toolbox")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // if player has the toolbox and a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 You come into a cluttered kitchen. Pots and pans are strewn about
                                 and there is some rotting food on the stoves. There are doors to
@@ -825,6 +898,7 @@ public class Main {
                                 3) Go through the southern exit.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -838,6 +912,8 @@ public class Main {
                             System.out.println("You go through the south exit.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
@@ -845,7 +921,7 @@ public class Main {
                 // Hazard Room
                 case "c4":
                     if (!player.items.get("hazmat")) {
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You enter a room with a flickering illuminating it. There are
                                 radiation signs encompassing the eastern part of the room, with
@@ -856,6 +932,7 @@ public class Main {
                                 2) Attempt to pass through the radiation.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -868,9 +945,11 @@ public class Main {
                             play = false;
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else {
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You enter a room with a flickering illuminating it. There are
                                 radiation signs encompassing the eastern part of the room, with
@@ -879,6 +958,9 @@ public class Main {
                                 What do you do?
                                 1) Go through the north exit.
                                 2) Use the hazmat suit to pass through the radiation.
+
+                                3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -890,6 +972,8 @@ public class Main {
                                     "With the hazmat suit you easily pass through the radiation.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
@@ -899,7 +983,7 @@ public class Main {
                     if (!player.items.get("crowbar")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // if player doesn't have the crowbar, and doesn't have a charged flashlight
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You can't make out much of the room in the darkness, but you can
                                 make out the shapes of lockers covering the walls, some of them
@@ -911,6 +995,7 @@ public class Main {
                                 2) Go through the eastern door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -921,13 +1006,15 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("crowbar") && !player.items.get("radio")
                             && !player.items.get("toolbox")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // player does have the crowbar, but doesn't have the radio, doesn't have
                         // the toolbox, and doesn't have a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 You can't make out much of the room in the darkness, but you can
                                 make out the shapes of lockers covering the walls, some of them
@@ -940,6 +1027,7 @@ public class Main {
                                 3) Use the crowbar to pry open the locker.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -957,13 +1045,15 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("crowbar") && !player.items.get("radio")
                             && !player.items.get("toolbox")
                             && (!player.items.get("flashlight") && !player.items.get("battery"))) {
                         // player does have the crowbar, but doesn't have the radio, does have
                         // the toolbox, and doesn't have a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 You can't make out much of the room in the darkness, but you can
                                 make out the shapes of lockers covering the walls, some of them
@@ -976,6 +1066,7 @@ public class Main {
                                 3) Use the crowbar to pry open the locker.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -993,11 +1084,13 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("radio")
                             && (!player.items.get("flashlight") && player.items.get("battery"))) {
                         // player has the radio, but not a charged flashlight
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You can't make out much of the room in the darkness, but you can
                                 make out the shapes of lockers covering the walls, some of them
@@ -1008,6 +1101,7 @@ public class Main {
                                 2) Go through the eastern door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -1018,11 +1112,13 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (!player.items.get("crowbar")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // if player doesn't have the crowbar, but does have a charged flashlight
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 Thanks to your flashlight you can see that the room is some kind
                                 of armour. Locker fill the room, some that are fully enclosed, and
@@ -1035,6 +1131,7 @@ public class Main {
                                 2) Go through the eastern door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -1045,13 +1142,15 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("crowbar") && !player.items.get("radio")
                             && !player.items.get("toolbox")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // player does have the crowbar, but doesn't have the radio, doesn't have
                         // the toolbox, and does have a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 Thanks to your flashlight you can see that the room is some kind
                                 of armour. Locker fill the room, some that are fully enclosed, and
@@ -1065,6 +1164,7 @@ public class Main {
                                 3) Use the crowbar to pry open the locker.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -1082,13 +1182,15 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("crowbar") && !player.items.get("radio")
                             && player.items.get("toolbox")
                             && (player.items.get("flashlight") && player.items.get("battery"))) {
                         // player does have the crowbar, but doesn't have the radio, does have
                         // the toolbox, and does have a charged flashlight
-                        int[] validInputs = { 1, 2, 3, 4 };
+                        int[] validInputs = { 1, 2, 3, 4, 5 };
                         int choice = Utils.getChoice("""
                                 Thanks to your flashlight you can see that the room is some kind
                                 of armour. Locker fill the room, some that are fully enclosed, and
@@ -1102,6 +1204,7 @@ public class Main {
                                 3) Use the crowbar to pry open the locker.
 
                                 4) List inventory
+                                5) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 3) {
@@ -1119,11 +1222,13 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 4) {
                             player.listInventory();
+                        } else if (choice == 5) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("radio")
                             && (!player.items.get("flashlight") && player.items.get("battery"))) {
                         // player has the radio, and a charged flashlight
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 Thanks to your flashlight you can see that the room is some kind
                                 of armour. Locker fill the room, some that are fully enclosed, and
@@ -1134,6 +1239,7 @@ public class Main {
                                 2) Go through the eastern door.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -1144,6 +1250,8 @@ public class Main {
                             System.out.println("You go through the eastern door.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
@@ -1152,7 +1260,7 @@ public class Main {
                 case "e4":
                     if (!player.items.get("radio")) {
                         // player doesn't have the radio
-                        int[] validInputs = { 1, 2 };
+                        int[] validInputs = { 1, 2, 3 };
                         int choice = Utils.getChoice("""
                                 You come into a communication room lit by some lights. There is a
                                 console with various inputs, one of which is labelled 'radio'.
@@ -1161,6 +1269,7 @@ public class Main {
                                 1) Go through the western exit.
 
                                 2) List inventory
+                                3) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 1) {
@@ -1168,10 +1277,12 @@ public class Main {
                             System.out.println("You go through the western exit.");
                         } else if (choice == 2) {
                             player.listInventory();
+                        } else if (choice == 3) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("radio") && !player.items.get("toolbox")) {
                         // player has the radio but not the toolbox
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You come into a communication room lit by some lights. There is a
                                 console with various inputs, one of which is labelled 'radio',
@@ -1182,6 +1293,7 @@ public class Main {
                                 2) Plug the radio into the console.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 2) {
@@ -1194,10 +1306,12 @@ public class Main {
                             System.out.println("You go through the western exit.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     } else if (player.items.get("radio") && player.items.get("toolbox")) {
                         // player has the radio and the toolbox
-                        int[] validInputs = { 1, 2, 3 };
+                        int[] validInputs = { 1, 2, 3, 4 };
                         int choice = Utils.getChoice("""
                                 You come into a communication room lit by some lights. There is a
                                 console with various inputs, one of which is labelled 'radio',
@@ -1208,6 +1322,7 @@ public class Main {
                                 2) Plug the radio into the console.
 
                                 3) List inventory
+                                4) Inspect item
                                 """, validInputs, scanner);
 
                         if (choice == 2) {
@@ -1235,6 +1350,8 @@ public class Main {
                             System.out.println("You go through the western exit.");
                         } else if (choice == 3) {
                             player.listInventory();
+                        } else if (choice == 4) {
+                            System.out.println(pickItem(player, scanner));
                         }
                     }
                     break;
