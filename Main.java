@@ -61,12 +61,13 @@ public class Main {
         String display = "Which item do you want to use?\n";
         int[] validInputs = new int[inventory.length];
         for (int i = 0; i < inventory.length; i++) {
-            validInputs[i] = i++;
-            display += (i++) + ") " + inventory[i] + "\n";
+            int addition = i + 1;
+            validInputs[i] = addition;
+            display += addition + ") " + inventory[i] + "\n";
         }
 
         int choice = Utils.getChoice(display, validInputs, scanner);
-        String inspect = useItem(inventory[choice--]);
+        String inspect = useItem(inventory[(choice - 1)]);
         return inspect;
     }
 

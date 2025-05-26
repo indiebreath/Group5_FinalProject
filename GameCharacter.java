@@ -119,7 +119,7 @@ public class GameCharacter {
         int index = 0;
         for (String x : items.keySet()) {
             if (items.get(x)) {
-                inventory.add(index, x);
+                inventory.add(x);
             }
             index++;
         }
