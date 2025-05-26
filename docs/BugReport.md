@@ -45,3 +45,19 @@ Program would hang whenever entering the hazard room, whether it be from normal 
 Found by: Mei Waterman
 
 Solution: actually add the hazmat suit to the player's inventory, which wasn't initialised thuis returned null. No idea why it just hung here but errored on others but oh well.
+
+# Issue 7
+
+Errors given whenever trying to run Main.java file, saying that it cannot access GameCharacter or Util classes.
+
+Found by: Mei Waterman
+
+Solution: Compile both Utils.java and GameCharacter.java before running Main.java.
+
+# Issue 8
+
+Illegal access error thrown whenever trying to access data from GameCharacter instance such as location or inventory.
+
+Found by: Mei Waterman
+
+Solution: Also compile Main.java and run through "java Main" command rather than old method.

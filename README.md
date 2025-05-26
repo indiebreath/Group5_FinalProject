@@ -1,4 +1,4 @@
 Group 5's Final Project submission, containing both the code and documentation for the project.
 
-Code is contained within the .java files within the root directory of this project, while the Overview and other documentation related files are contained within the docs folder.
-To run the game, run the Main.java file and then follow the prompts as displayed until either the game is completed, or you wish to exit at any time by typing 0 into any prompt.
+Code is contained within the .java files within the root directory of this project, while the Overview and Bug Report are contained within the docs folder.
+To run the game it needs to be compiled by running the command "javac Main.java Utils.java GameCharacter.java" then running the main class by running the command "java Main". Other ways can throw errors.
