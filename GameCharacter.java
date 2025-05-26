@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ import java.util.Random;
  *
  * @author Mei Waterman (indiebreath)
  */
-public class Character {
+public class GameCharacter {
     // The character name.
     String name;
     // A hashmap containing all of the items and a boolean to determine whether or
@@ -31,8 +32,9 @@ public class Character {
      * Character constructor to initialize the class with all parameters filled by
      * an input.
      */
-    public Character(String nameInput, HashMap<String, Boolean> itemsInput, String locationInput,
-            int healthInput, int maxHealthInput, int minDamageInput, int maxDamageInput) {
+    public GameCharacter(String nameInput, HashMap<String, Boolean> itemsInput,
+            String locationInput, int healthInput, int maxHealthInput, int minDamageInput,
+            int maxDamageInput) {
         name = nameInput;
         items = itemsInput;
         location = locationInput;
@@ -92,7 +94,7 @@ public class Character {
      * @return returns a string listing off the collected items in Character's
      *         inventory.
      */
-    public String listInventory() {
+    public void listInventory() {
         String inventory = "You have:\n";
 
         for (String x : items.keySet()) {
@@ -101,6 +103,34 @@ public class Character {
             }
         }
 
-        return inventory;
+        System.out.println(inventory);
+    }
+
+    /**
+     * Method to get a list of all collected items in the Character's inventory then
+     * return it as an array of strings.
+     *
+     * @return an array of items in the Character's inventory that are
+     *         true/collected
+     */
+    public String[] getInventory() {
+        ArrayList<String> inventory = new ArrayList<String>();
+
+        int index = 0;
+        for (String x : items.keySet()) {
+            if (items.get(x)) {
+                inventory.add(x);
+            }
+            index++;
+        }
+
+        index = 0;
+        String[] output = new String[inventory.size()];
+        for (String x : inventory) {
+            output[index] = x;
+            index++;
+        }
+
+        return output;
     }
 }
