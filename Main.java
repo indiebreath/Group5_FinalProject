@@ -55,6 +55,15 @@ public class Main {
         return result;
     }
 
+    /**
+     * A method to do the full inspect action. It starts by getting an array of
+     * collected items, then formats it into a prompt to ask the user to pick an
+     * item, and then uses the useItem method to get the inspect text for that item.
+     *
+     * @param player the player instance to get the inventory of
+     * @param scanner the global scanner instance
+     * @return the string received from useItem
+     */
     static String pickItem(GameCharacter player, Scanner scanner) {
         String[] inventory = player.getInventory();
         if (inventory.length == 0) {
