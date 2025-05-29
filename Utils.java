@@ -8,7 +8,7 @@ import java.util.Scanner;
  *
  * <p>
  * A generic file containing functions that may be used regularly across the
- * projected, all separated into their own file in order to avoid clogging up
+ * project, all separated into their own file in order to avoid clogging up
  * the main class with misceallaneous functions.
  * </p>
  *
@@ -35,6 +35,7 @@ public class Utils {
      *                    and what options they can take.
      * @param validInputs an array of the valid numbers they can input. Cannot
      *                    contain -1.
+     * @param scanner     the global scanner
      * @return returns what the user selected, if it was valid.
      */
     public static int getChoice(String prompt, int[] validInputs, Scanner scanner) {

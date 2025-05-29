@@ -29,8 +29,19 @@ public class GameCharacter {
     int maxDamage;
 
     /**
-     * Character constructor to initialize the class with all parameters filled by
-     * an input.
+     * The constructor for the GameCharacter class.
+     *
+     * @param nameInput      what to set the character's name to, as a String
+     * @param itemsInput     what to set the character's inventory to, as a HashMap
+     *                       of Strings and Booleans
+     * @param locationInput  what to set the character's location to, as a String
+     * @param healthInput    what to set the character's health to, as an int
+     * @param maxHealthInput what to set the character's maximum health to, as an
+     *                       int
+     * @param minDamageInput what to set the character's minimum damage to, as an
+     *                       int
+     * @param maxDamageInput what to set the character's maximum damage to, as an
+     *                       int
      */
     public GameCharacter(String nameInput, HashMap<String, Boolean> itemsInput,
             String locationInput, int healthInput, int maxHealthInput, int minDamageInput,
@@ -88,11 +99,8 @@ public class GameCharacter {
     }
 
     /**
-     * Method to get all collected items in the Character's inventory and returns
-     * the list as a string.
-     *
-     * @return returns a string listing off the collected items in Character's
-     *         inventory.
+     * Method to get all collected items in the Character's inventory and displays
+     * the string to the output.
      */
     public void listInventory() {
         String inventory = "You have:\n";
