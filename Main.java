@@ -60,7 +60,7 @@ public class Main {
      * collected items, then formats it into a prompt to ask the user to pick an
      * item, and then uses the useItem method to get the inspect text for that item.
      *
-     * @param player the player instance to get the inventory of
+     * @param player  the player instance to get the inventory of
      * @param scanner the global scanner instance
      * @return the string received from useItem
      */
@@ -101,6 +101,11 @@ public class Main {
         accessCode = Utils.generateAlphanumericString(7);
 
         // Introduction text.
+        System.out.println("""
+                You awake to darkness. Blinking a couple of times you slowly stand up, your body
+                aching in pain. Looking around the room you aren't sure where you are, or how you
+                got there. Taking a step forward, rubble clutters by your feet. Wherever you are,
+                you need to find a way to escape.""");
 
         // Main game loop.
         while (play) {
