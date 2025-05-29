@@ -9,6 +9,13 @@ import java.util.Scanner;
 public class Main {
     static String accessCode = "";
 
+    /**
+     * A method to generate the player's inventory upon game start. Adds all used
+     * items in a default state of false to represent that the player hasn't
+     * collected anything.
+     *
+     * @return the created HashMap
+     */
     static HashMap<String, Boolean> createPlayerItems() {
         HashMap<String, Boolean> items = new HashMap<String, Boolean>();
         items.put("flashlight", false);
