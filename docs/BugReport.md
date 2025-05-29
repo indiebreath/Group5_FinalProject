@@ -40,13 +40,21 @@ Solution: have one global instance of the Scanner, which is passed around to eve
 
 # Issue 6
 
+Program would error out with null exception when calling the attack method within GameCharacter.
+
+Found by: Mei Waterman
+
+Solution: add null-safe comparison, making the program return false if the if the value is null rather than erroring.
+
+# Issue 7
+
 Program would hang whenever entering the hazard room, whether it be from normal traversal or by directly setting the player's position.
 
 Found by: Mei Waterman
 
 Solution: actually add the hazmat suit to the player's inventory, which wasn't initialised thuis returned null. No idea why it just hung here but errored on others but oh well.
 
-# Issue 7
+# Issue 8
 
 Errors given whenever trying to run Main.java file, saying that it cannot access GameCharacter or Util classes.
 
@@ -54,7 +62,7 @@ Found by: Mei Waterman
 
 Solution: Compile both Utils.java and GameCharacter.java before running Main.java.
 
-# Issue 8
+# Issue 9
 
 Illegal access error thrown whenever trying to access data from GameCharacter instance such as location or inventory.
 
